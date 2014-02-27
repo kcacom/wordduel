@@ -12,7 +12,7 @@ var app = {
 	},
 
 	render: function (contacts) {
-		self.notify(JSON.stringify(contacts), 'info');
+		self.notify(PhoneGap.stringify(contacts), 'info');
 
 		var $contacts = $('#contacts');
 		for (var i = 0; i < contacts.length; i++) {
@@ -29,8 +29,10 @@ var app = {
 			options.filter = '';
 			options.multiple = true;
 
+			self.notify('find', 'info');
 			navigator.contacts.find(fields,
 				function (contacts) {
+					self.notify('success', 'info');
 					self.render(contacts);
 				},
 				function (error) {
