@@ -1,7 +1,7 @@
 
 var MY_DEVICE_REG_ID = "myDeviceRegId";
 
-var wordduel = angular.module('wordduel');
+var wordduel = angular.module('wordduel', []);
 
 wordduel.controller("ContactsController", function($scope, $window, $timeout){
 	$scope.contacts = [
