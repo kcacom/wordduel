@@ -14,8 +14,8 @@ var app = {
 	render: function (contacts) {
 		var html = '';
 		for (var i = 0; i < contacts.length; i++) {
-			//html += '<div class="row"><div class="col-md-6 name">' + contacts[i].name.givenName + ' ' + contacts[i].name.familyName + '</div><div class="col-md-6 email">' +  contacts[i].emails[0].value + '</div></div>';
-			html += '<div class="row name">' + contacts[i].name.givenName + '</div>';
+			html += '<div class="row"><div class="col-md-6 name">' + contacts[i].name.givenName + ' ' + contacts[i].name.familyName + '</div><div class="col-md-6 email">' +  contacts[i].emails[0].value + '</div></div>';
+			//html += '<div class="row name">' + contacts[i].name.givenName + '</div>';
 		}
 		$('#contacts').append(html);
 	},
