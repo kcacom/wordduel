@@ -29,6 +29,7 @@ var app = {
 
 			navigator.contacts.find(fields,
 				function (contacts) {
+					self.notify(contacts.length, 'info');
 					self.render(contacts);
 				},
 				function (error) {
