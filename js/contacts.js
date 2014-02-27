@@ -11,8 +11,7 @@ var app = {
 	render: function (contacts) {
 		var $contacts = $('#contacts');
 		for (var i = 0; i < contacts.length; i++) {
-			//$contacts.append('<div class="name">' + contacts[i].firstName + ' ' + contacts[i].lastName + '</div><div class="email">' +  contacts[i].email + '</div>');
-			$contacts.append('d');
+			$contacts.append('<div class="row"><div class="col-md-8 name">' + contacts[i].firstName + ' ' + contacts[i].lastName + '</div><div class="col-md-4 email">' +  contacts[i].email + '</div></div>');
 		}
 	},
 
