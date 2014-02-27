@@ -1,0 +1,23 @@
+.top-spacing {
+	margin-top: 5px;
+}
+.btn-default {
+	width: 35px;
+}
+h1 {
+	text-align: center;
+}
+h2 {
+	text-align: center;
+}
+#round {
+	font-weight: bold;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+#lower {
+	border-top: solid 1px #cccccc;
+}
+#backspace {
+	width: 73px;
+}

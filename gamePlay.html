@@ -10,7 +10,7 @@
 		<title>Word Duel</title>
 	</head>
 	<body data-ng-app="wordduel">
-		<div id="upper" class="container">
+		<div id="upper" class="container-fluid">
 			<div class="row">
 				<h1>Word Duel</h1>
 			</div>
@@ -25,14 +25,80 @@
 				</div>
 			</div>
 			<div id="rounds" class="row">
+				<div class="col-xs-12">
+					<span id="matchesLeft">*</span>
+					<button type="button" class="btn btn-default">X</button>
+					<button type="button" class="btn btn-default">X</button>
+					<button type="button" class="btn btn-default">X</button>
+					<button type="button" class="btn btn-default">X</button>
+					<span id="round">1</span>
+					<button type="button" class="btn btn-default">X</button>
+					<button type="button" class="btn btn-default">X</button>
+					<button type="button" class="btn btn-default">X</button>
+					<button type="button" class="btn btn-default">X</button>
+					<span id="matchesRight">*</span>
+				</div>
 			</div>
 		</div>
-		<div id="lower" class="container">
-			<div class="row">
+		<div id="lower" class="container-fluid top-spacing">
+			<div class="row top-spacing">
+				<div class="col-xs-2"></div>
+				<div class="col-xs-8">
+					<button type="button" class="btn btn-default">X</button>
+					<button type="button" class="btn btn-default">X</button>
+					<button type="button" class="btn btn-default">X</button>
+					<button type="button" class="btn btn-default">X</button>
+					<button id="guess" type="button" class="btn btn-primary">Guess</button>
+				</div>
+				<div class="col-xs-2"></div>
 			</div>
-			<div class="row">
+			<div id="keyboard">
+				<div class="row top-spacing">
+					<div class="col-xs-12">
+						<button type="button" class="btn btn-default">A</button>
+						<button type="button" class="btn btn-default">B</button>
+						<button type="button" class="btn btn-default">C</button>
+						<button type="button" class="btn btn-default">D</button>
+						<button type="button" class="btn btn-default">E</button>
+						<button type="button" class="btn btn-default">F</button>
+						<button id="backspace" type="button" class="btn btn-default">&lt;==</button>
+					</div>
+				</div>
+				<div class="row top-spacing">
+					<div class="col-xs-12">
+						<button type="button" class="btn btn-default">G</button>
+						<button type="button" class="btn btn-default">H</button>
+						<button type="button" class="btn btn-default">I</button>
+						<button type="button" class="btn btn-default">J</button>
+						<button type="button" class="btn btn-default">K</button>
+						<button type="button" class="btn btn-default">L</button>
+						<button type="button" class="btn btn-default">M</button>
+						<button type="button" class="btn btn-default">N</button>
+					</div>
+				</div>
+				<div class="row top-spacing">
+					<div class="col-xs-12">
+						<button type="button" class="btn btn-default">O</button>
+						<button type="button" class="btn btn-default">P</button>
+						<button type="button" class="btn btn-default">Q</button>
+						<button type="button" class="btn btn-default">R</button>
+						<button type="button" class="btn btn-default">S</button>
+						<button type="button" class="btn btn-default">T</button>
+						<button type="button" class="btn btn-default">U</button>
+						<button type="button" class="btn btn-default">V</button>
+					</div>
+				</div>
+				<div class="row top-spacing">
+					<div class="col-xs-12">
+						<button type="button" class="btn btn-default">W</button>
+						<button type="button" class="btn btn-default">X</button>
+						<button type="button" class="btn btn-default">Y</button>
+						<button type="button" class="btn btn-default">Z</button>
+					</div>
+				</div>
 			</div>
 		</div>
+
 		<script type="text/javascript" src="cordova.js"></script>
 		<script src="js/vendor/jquery-2.1.0.js"></script>
 		<script src="js/vendor/bootstrap.js"></script>
