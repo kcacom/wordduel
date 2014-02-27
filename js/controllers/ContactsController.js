@@ -11,10 +11,8 @@ wordduel.controller("ContactsController", function($scope, $window, $timeout){
 			];
 	
 	
-	$('#contactsBus').bind('successfulContactsCallback', function(e, newContacts) {
-		$scope.$apply(function() {
-			$scope.contacts = newContacts;
-		});
+	$('#contactsBus').bind('successfulContactsCallback', function(e) {
+		$scope.initialize();
 	});
 	
 	$scope.sendEmailTo = function(emailAddress, name) {
@@ -67,3 +65,14 @@ wordduel.controller("ContactsController", function($scope, $window, $timeout){
 	
 	document.addEventListener("deviceready", $scope.initialize, false);
 });
+
+var app = { 
+	initialize: function() {
+		$('#contactsBus').trigger('successfulContactsCallback');
+	}
+};
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+	app.initialize();
+}
+
