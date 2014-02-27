@@ -8,25 +8,38 @@ var app = {
 		}
 	},
 
+	displayContacts: function (contacts) {
+		for (var i = 0; i < contacts.length; i++) {
+			$('#contacts').append('<div>' + contacts[i].firstName + ' ' + contacts[i].lastName + '</div><div style="margin-bottom: 10px;">' +  contacts[i].email + '</div>');
+		}
+	},
+
 	initialize: function() {
 		var self = this;
 
-		var options = new ContactFindOptions();
-		options.filter = '';
-		options.multiple = true;
-		var filter = ['firstName', 'lastName', 'email'];
+		if (navigator.contacts) {
+			var options = new ContactFindOptions();
+			options.filter = '';
+			options.multiple = true;
+			var filter = ['firstName', 'lastName', 'email'];
 
-		navigator.contacts.find(filter,
-			function (contacts) {
-				showAlert('success', 'info');
-				for (var i=0; i<contacts.length; i++) {
-					$('#contacts').append('<div>' + contacts[i].firstName + ' ' + contacts[i].firstName + '</div><div>' +  contacts[i].email + '</div>');
-				}
-			},
-			function (error) {
-				self.showAlert(error, 'error');
-			},
-			options);
+			navigator.contacts.find(filter,
+				function (contacts) {
+					self.showAlert('success', 'info');
+					self.displayContacts(contacts);
+				},
+				function (error) {
+					self.showAlert(error, 'error');
+				},
+				options);
+		} else {
+			var contacts = [
+				{'firstName':'f1','lastName':'l1','email':'e1'},
+				{'firstName':'f2','lastName':'l2','email':'e2'},
+				{'firstName':'f3','lastName':'l3','email':'e3'}
+			];
+			self.displayContacts(contacts);
+		}
 	}
 };
 
