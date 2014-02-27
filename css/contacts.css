@@ -1,0 +1,12 @@
+#back {
+	margin-bottom: 10px;
+}
+
+#contacts .name {
+	color: green;
+}
+
+#contacts .email {
+	color: blue;
+	margin-bottom: 10px;
+}
