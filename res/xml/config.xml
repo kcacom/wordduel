@@ -1,3 +1,1 @@
-<feature name="Contacts">
-    <param name="android-package" value="org.apache.cordova.contacts.ContactManager" />
-</feature>
+<plugin name="Contacts" value="org.apache.cordova.ContactManager" />

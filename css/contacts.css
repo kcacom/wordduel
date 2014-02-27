@@ -1,8 +1,8 @@
-#contacts name {
+#contacts .name {
 	color: green;
 }
 
-#contacts email {
+#contacts .email {
 	color: blue;
 	margin-bottom: 10px;
 }

@@ -1,6 +1,6 @@
 var app = {
 
-	showAlert: function (message, title) {
+	notify: function (message, title) {
 		if (navigator.notification) {
 			navigator.notification.alert(message, null, title, 'OK');
 		} else {
@@ -8,9 +8,11 @@ var app = {
 		}
 	},
 
-	displayContacts: function (contacts) {
+	render: function (contacts) {
+		var $contacts = $('#contacts');
 		for (var i = 0; i < contacts.length; i++) {
-			$('#contacts').append('<div>' + contacts[i].firstName + ' ' + contacts[i].lastName + '</div><div style="margin-bottom: 10px;">' +  contacts[i].email + '</div>');
+			//$contacts.append('<div class="name">' + contacts[i].firstName + ' ' + contacts[i].lastName + '</div><div class="email">' +  contacts[i].email + '</div>');
+			$contacts.append('d');
 		}
 	},
 
@@ -25,11 +27,10 @@ var app = {
 
 			navigator.contacts.find(filter,
 				function (contacts) {
-					self.showAlert('success', 'info');
-					self.displayContacts(contacts);
+					self.render(contacts);
 				},
 				function (error) {
-					self.showAlert(error, 'error');
+					self.notify(error, 'error');
 				},
 				options);
 		} else {
@@ -38,8 +39,7 @@ var app = {
 				{'firstName':'f2','lastName':'l2','email':'e2'},
 				{'firstName':'f3','lastName':'l3','email':'e3'}
 			];
-			self.showAlert('success', 'info');
-			self.displayContacts(contacts);
+			self.render(contacts);
 		}
 	}
 };
