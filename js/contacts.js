@@ -70,4 +70,7 @@ var app = {
 	}
 };
 
-app.initialize();
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+	app.initialize();
+}
