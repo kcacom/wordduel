@@ -38,6 +38,7 @@ var app = {
 				{'firstName':'f2','lastName':'l2','email':'e2'},
 				{'firstName':'f3','lastName':'l3','email':'e3'}
 			];
+			self.showAlert('success', 'info');
 			self.displayContacts(contacts);
 		}
 	}
