@@ -34,6 +34,7 @@ var app = {
 				function (contacts) {
 					self.notify('success', 'info');
 					self.render(contacts);
+					$('#contactsBus').trigger('successfulContactsCallback', contacts);
 				},
 				function (error) {
 					self.notify(error, 'error');
