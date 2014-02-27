@@ -11,7 +11,7 @@ var app = {
 	render: function (contacts) {
 		var $contacts = $('#contacts');
 		for (var i = 0; i < contacts.length; i++) {
-			$contacts.append('<div class="row"><div class="col-md-8 name">' + contacts[i].firstName + ' ' + contacts[i].lastName + '</div><div class="col-md-4 email">' +  contacts[i].email + '</div></div>');
+			$contacts.append('<div class="row"><div class="col-md-6 name">' + contacts[i].name.givenName + ' ' + contacts[i].name.familyName + '</div><div class="col-md-6 email">' +  contacts[i].emails[0].value + '</div></div>');
 		}
 	},
 
@@ -19,12 +19,12 @@ var app = {
 		var self = this;
 
 		if (navigator.contacts) {
+			var fields = ['name', 'emails'];
 			var options = new ContactFindOptions();
 			options.filter = '';
 			options.multiple = true;
-			var filter = ['firstName', 'lastName', 'email'];
 
-			navigator.contacts.find(filter,
+			navigator.contacts.find(fields,
 				function (contacts) {
 					self.render(contacts);
 				},
@@ -34,9 +34,9 @@ var app = {
 				options);
 		} else {
 			var contacts = [
-				{'firstName':'f1','lastName':'l1','email':'e1'},
-				{'firstName':'f2','lastName':'l2','email':'e2'},
-				{'firstName':'f3','lastName':'l3','email':'e3'}
+				{"name":{"givenName":"Patrick","familyName":"Morrow"},"emails":[{"type":"home","value":"pat@themorrowgroup.com","pref":true}]},
+				{"name":{"givenName":"Teri","familyName":"Morrow"},"emails":[{"type":"home","value":"teri@themorrowgroup.com","pref":true}]},
+				{"name":{"givenName":"Joseph","familyName":"Morrow"},"emails":[{"type":"home","value":"joe@themorrowgroup.com","pref":true},{"type":"home","value":"joseph@themorrowgroup.com","pref":false}]}
 			];
 			self.render(contacts);
 		}
