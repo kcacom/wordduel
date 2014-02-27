@@ -12,7 +12,9 @@ wordduel.controller("ContactsController", function($scope, $window, $timeout){
 	
 	
 	$('#contactsBus').bind('successfulContactsCallback', function(e, newContacts) {
-		$scope.contacts = newContacts;
+		$scope.$apply(function() {
+			$scope.contacts = newContacts;
+		});
 	});
 	
 	$scope.sendEmailTo = function(emailAddress, name) {
@@ -31,4 +33,37 @@ wordduel.controller("ContactsController", function($scope, $window, $timeout){
 	$scope.emailSentCallback = function() {
 		self.notify('Player invited!', 'Info');
 	};
+	
+	var notify = function (message, title) {
+		if (navigator.notification) {
+			navigator.notification.alert(message, null, title, 'OK');
+		} else {
+			alert(title ? (title + ": " + message) : message);
+		}
+	};
+	
+	$scope.initialize = function() {
+		if (navigator.contacts) {
+			var fields = ['name', 'emails'];
+			var options = new ContactFindOptions();
+			options.filter = '';
+			options.multiple = true;
+			navigator.contacts.find(fields,
+				function (contacts) {
+					$scope.$apply(function() {
+						$scope.contacts = contacts;
+					});
+				},
+				function (error) {
+					notify(error, 'error');
+				},
+				options);
+		} else {
+			// TODO: Can't get contacts
+			notify('error', 'error');
+		}
+	};
+	
+	
+	document.addEventListener("deviceready", $scope.initialize, false);
 });
