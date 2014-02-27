@@ -12,11 +12,10 @@ var app = {
 	},
 
 	render: function (contacts) {
-		self.notify(PhoneGap.stringify(contacts), 'info');
-
 		var $contacts = $('#contacts');
 		for (var i = 0; i < contacts.length; i++) {
-			$contacts.append('<div class="row"><div class="col-md-6 name">' + contacts[i].name.givenName + ' ' + contacts[i].name.familyName + '</div><div class="col-md-6 email">' +  contacts[i].emails[0].value + '</div></div>');
+			//$contacts.append('<div class="row"><div class="col-md-6 name">' + contacts[i].name.givenName + ' ' + contacts[i].name.familyName + '</div><div class="col-md-6 email">' +  contacts[i].emails[0].value + '</div></div>');
+			$contacts.append('<div class="row">' + contacts[i].name.givenName + '</div>');
 		}
 	},
 
