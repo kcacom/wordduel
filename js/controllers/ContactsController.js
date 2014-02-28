@@ -20,6 +20,9 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 		gamePlayStorage.initializeMyEmail();
 		gamePlayStorage.initializeMyName();
 
+		var myemail = gamePlayStorage.getMyEmail();
+		var myname = gamePlayStorage.getMyName();
+
 		var subject = 'Play Word Duel Invitation';
 		var body = 'Hello ' + contact.displayName + ',<br/>';
 		body += 'Get the app here: <a href="https://play.google.com/store/apps/details?id=com.playwordduel">Word Duel</a><br/>';
