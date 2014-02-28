@@ -18,10 +18,11 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 		var subject = 'Play Word Duel Invitation';
 		var body = 'Hello ' + contact.displayName + ',<br/>';
 		body += 'Get the app here: <a href="https://play.google.com/store/apps/details?id=com.mobilewordduel">Word Duel</a><br/>';
-		body += 'Then accept the invitation to play: <a href="https://googledrive.com/host/0B42c8HW7dKbZYUZlZFJaZVU5RlU/transfer.html?deviceRegId=' + contact.deviceRegId + '&inviterName=Bob&inviterEmail=kelvcutler@gmail.com">Play!</a>';		
+		body += 'Then accept the invitation to play: <a href="https://googledrive.com/host/0B42c8HW7dKbZYUZlZFJaZVU5RlU/transfer.html?deviceRegId=' + deviceRegId + '&inviterName=Bob&inviterEmail=kelvcutler@gmail.com">Play!</a>';		
 		var torecipients = [contact.emailAddress];
 		$window.plugins.emailComposer.showEmailComposerWithCallback(function() {
 			emailContactCallback(contact, deviceRegId);
+			notify('after email in callback', 'debug');
 		}, subject, body, torecipients, null, null, true, null, null);
 	}
 	function emailContactCallback(contact, deviceRegId) {
