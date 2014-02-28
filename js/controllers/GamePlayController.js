@@ -92,6 +92,8 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		if (game.letterStates === undefined) {
 			game.letterStates = createLetterStates();
 		}
+		if (game.rounds === undefined) 
+			game.rounds = [];
 		updateRoundsExtraData(game);
 		if (!$scope.reminderSent) {
 			var opponentInfo = loadOpponentInfo(urlParams.opponent);
