@@ -40,20 +40,25 @@ var app = {
  
             case 'message':
             	if (e.payload) {
-	            	if (e.payload.gameState && e.payload.opponentEmail) {
-	              		deserializeAndStoreGameState(e.payload.opponentEmail, e.payload.gameState);
-	              		if ($('#stateBus').length) {
-	              			$('#stateBus').trigger('successfulStateCallback', []);
-	              		}
-	            	} else if (e.payload.opponentEmail && e.payload.deviceRegId) {
-	            		updatePlayerList(e.payload.opponentEmail, e.payload.deviceRegId);
-	              		if ($('#playerListBus').length) {
-	              			$('#playerListBus').trigger('playerListUpdated', []);
-	              		}
-	            	} else {
-	            		alert("message: "+JSON.stringify(e));
-	            	}	
+	            	try {
+		            	if (e.payload.gameState && e.payload.opponentEmail) {
+		              		deserializeAndStoreGameState(e.payload.opponentEmail, e.payload.gameState);
+		              		if ($('#stateBus').length) {
+		              			$('#stateBus').trigger('successfulStateCallback', []);
+		              		}
+		            	} else if (e.payload.opponentEmail && e.payload.deviceRegId) {
+		            		updatePlayerList(e.payload.opponentEmail, e.payload.deviceRegId);
+		              		if ($('#playerListBus').length) {
+		              			$('#playerListBus').trigger('playerListUpdated', []);
+		              		}
+		            	} else {
+		            		alert("message: "+JSON.stringify(e));
+		            	}
+		            } catch(ex) {
+		            	alert(ex);
+		            }
 	            }
+		        alert("message: "+JSON.stringify(e));
             break;
  
             case 'error':
