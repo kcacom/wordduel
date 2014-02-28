@@ -38,8 +38,18 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 		// TODO: should use the callback, but the callback isn't being called
 
 		var players = gamePlayStorage.getPlayerList();
-		players.push({"email":contact.emailAddress,"name":contact.displayName,"deviceRegId":null});
-		gamePlayStorage.setPlayerList(players)
+		if (!players) 
+			players = [];
+		var found = false;
+		for (var i=0; i<players.length; i++) {
+			if (players[i].email == contact.emailAddress) {
+				players[i].name = contact.displayName;
+				found = true;
+			}
+		}
+		if (!found)
+			players.push({"email":contact.emailAddress,"name":contact.displayName,"deviceRegId":null});
+		gamePlayStorage.setPlayerList(players);
 
 		notify('Player invited!', 'Info');
 

@@ -27,7 +27,15 @@ wordDuel.controller("PlayerListController", function($scope, $window, $http, $ti
 			var urlParams = {};
 			while (match = search.exec(query))
 				urlParams[decode(match[1])] = decode(match[2]);
-			$scope.playerList.push({'deviceRegId':urlParams.deviceRegId, 'name':urlParams.inviterName, 'email':urlParams.inviterEmail});
+			var found = false;
+			for (var i=0; i<$scope.playerList.length; i++) {
+				if ($scope.playerList[i].email == urlParams.inviterEmail) {
+					$scope.playerList[i].deviceRegId = urlParams.deviceRegId;
+					found = true;
+				}
+			}
+			if (!found)
+				$scope.playerList.push({'deviceRegId':urlParams.deviceRegId, 'name':urlParams.inviterName, 'email':urlParams.inviterEmail});
 			gamePlayStorage.setPlayerList($scope.playerList);
 			sendPushNotification($http, urlParams.deviceRegId, gamePlayStorage.getMyEmail(), null, gamePlayStorage.getDeviceRegId());
 		});

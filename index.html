@@ -13,9 +13,9 @@
         <h4 id="subtitle">Who is the word champion?</h4>
 
         <div id="players" ng-controller="PlayerListController">
-        	<div ng-repeat="player in playerList" class="row" ng-click="selectPlayer(player)">
-        		<div class="col-md-6 name">{{player.name}}</div>
-        		<div class="col-md-6 email">{{player.email}}</div>
+        	<div ng-repeat="player in playerList" class="row">
+        		<div class="col-md-6 name" ng-click="selectPlayer(player)">{{player.name}}</div>
+        		<div class="col-md-6 email" ng-click="selectPlayer(player)">{{player.email}}</div>
         	</div>
         </div>
 
