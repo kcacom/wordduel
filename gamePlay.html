@@ -17,37 +17,43 @@
 			<section class="row">
 				<div class="col-xs-6">
 					<h2>{{name}}</h2>
-					<h2>? ? ? ?</h2>
+					<h2>????</h2>
 				</div>
 				<div class="col-xs-6">
-					<h2>Player 2</h2>
-					<h2>W O R D</h2>
+					<h2>{{opponentName}}</h2>
+					<h2>{{game.yourWord}}</h2>
 				</div>
 			</section>
-			<section id="rounds" class="row">
-				<div class="col-xs-12">
-					<span id="matchesLeft">*</span>
-					<button type="button" class="btn btn-default">X</button>
-					<button type="button" class="btn btn-default">X</button>
-					<button type="button" class="btn btn-default">X</button>
-					<button type="button" class="btn btn-default">X</button>
-					<span id="round">1</span>
-					<button type="button" class="btn btn-default">X</button>
-					<button type="button" class="btn btn-default">X</button>
-					<button type="button" class="btn btn-default">X</button>
-					<button type="button" class="btn btn-default">X</button>
-					<span id="matchesRight">*</span>
-				</div>
+			<section id="rounds">
+				<ul>
+					<li ng-repeat="r in game.roundsData">
+						<div class="row">
+							<div class="col-xs-12">
+								<span id="matchesLeft">{{r.yours.matches}}</span>
+								<button type="button" class="btn btn-default">{{r.yours.parts[0]}}</button>
+								<button type="button" class="btn btn-default">{{r.yours.parts[1]}}</button>
+								<button type="button" class="btn btn-default">{{r.yours.parts[2]}}</button>
+								<button type="button" class="btn btn-default">{{r.yours.parts[3]}}</button>
+								<span id="round">{{$index + 1}}</span>
+								<button type="button" class="btn btn-default">{{r.theirs.parts[0]}}</button>
+								<button type="button" class="btn btn-default">{{r.theirs.parts[1]}}</button>
+								<button type="button" class="btn btn-default">{{r.theirs.parts[2]}}</button>
+								<button type="button" class="btn btn-default">{{r.theirs.parts[3]}}</button>
+								<span id="matchesRight">{{r.theirs.matches}}</span>
+							</div>
+						</div>
+					</li>
+				</ul>
 			</section>
 		</section>
 		<section id="lower" class="container-fluid top-spacing">
 			<section class="row top-spacing">
 				<div class="col-xs-2"></div>
 				<div class="col-xs-8">
-					<button type="button" class="btn btn-default">X</button>
-					<button type="button" class="btn btn-default">X</button>
-					<button type="button" class="btn btn-default">X</button>
-					<button type="button" class="btn btn-default">X</button>
+					<button type="button" class="btn btn-default"></button>
+					<button type="button" class="btn btn-default"></button>
+					<button type="button" class="btn btn-default"></button>
+					<button type="button" class="btn btn-default"></button>
 					<button id="guess" type="button" class="btn btn-primary">Guess</button>
 				</div>
 				<div class="col-xs-2"></div>
@@ -99,11 +105,12 @@
 			</section>
 		</section>
 
+		<input type="hidden" id="stateBus" />
+
 		<script type="text/javascript" src="cordova.js"></script>
 		<script src="js/vendor/jquery-2.1.0.js"></script>
 		<script src="js/vendor/bootstrap.js"></script>
 		<script src="js/vendor/angular.js"></script>
-		<script src="js/vendor/angular-route.js"></script>
 		<script src="js/gameplay.js"></script>
 		<script src="js/controllers/GamePlayController.js"></script>
 		<script src="js/services/GamePlayStorage.js"></script>

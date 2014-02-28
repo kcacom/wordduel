@@ -42,13 +42,13 @@ wordDuel.factory('gamePlayStorage', function () {
 			setString(DEVICE_REG_ID, id);
 		},
 		getPlayerList: function () {
-			return getJson(PLAYER_LIST, []);
+			return getJson(PLAYER_LIST, '[]');
 		},
 		setPlayerList: function (list) {
 			setJson(PLAYER_LIST, list);
 		},
 		getGameState: function (playerEmail) {
-			return getJson(playerEmail, {});
+			return getJson(playerEmail, '{}');
 		},
 		setGameState: function (playerEmail, state) {
 			setJson(playerEmail, state);

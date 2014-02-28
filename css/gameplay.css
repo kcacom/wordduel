@@ -2,6 +2,7 @@
 	margin-top: 5px;
 }
 .btn-default {
+	height: 35px;
 	width: 35px;
 }
 h1 {
@@ -9,6 +10,10 @@ h1 {
 }
 h2 {
 	text-align: center;
+}
+ul {
+	list-style: none;
+	padding: 0;
 }
 #round {
 	font-weight: bold;
