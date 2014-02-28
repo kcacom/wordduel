@@ -10,8 +10,10 @@ wordDuel.controller("PlayerListController", function($scope, $window, $http, $ti
 		$window.location = "gamePlay.html?opponent="+player.email;
 	};
 	
-	$('#playerListBus').bind('playerListUpdated', function() {
-		$scope.playerList = gamePlayStorage.getPlayerList();
+	$('#playerListBus').bind('playerListUpdated', function(e) {
+		$scope.$apply(function() {
+			$scope.playerList = gamePlayStorage.getPlayerList();
+		});
 	});
 	$('#newInvite').change(function() {
 		$scope.$apply(function() {

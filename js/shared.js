@@ -51,14 +51,16 @@ var app = {
 		              		if ($('#playerListBus').length) {
 		              			$('#playerListBus').trigger('playerListUpdated', []);
 		              		}
+		              		alert("success"+localStorage["player-list"]);
 		            	} else {
-		            		alert("message: "+JSON.stringify(e));
+		            		alert("no options: "+JSON.stringify(e));
 		            	}
 		            } catch(ex) {
 		            	alert(ex);
 		            }
-	            }
-		        alert("message: "+JSON.stringify(e));
+	            } else {
+		        	alert("no payload: "+JSON.stringify(e));
+		        }
             break;
  
             case 'error':
