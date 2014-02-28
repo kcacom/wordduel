@@ -167,12 +167,12 @@ var sendNoRetryMethod = Sender.prototype.sendNoRetry = function (message, regist
 
     post_options.timeout = timeout;
 
+	alert('Request to make: '+JSON.stringify(post_options));
 	this.requestMaker.post(post_options).success(function(data, status, headers, config) {
+		alert('Success: '+data);
 		if (!data)
 			return callback('response is null', null);
 
-		// Make sure that we don't crash in case something goes wrong while
-		// handling the response.
 		try {
 			var dataObj = JSON.parse(data);
 		} catch (e) {
@@ -180,6 +180,7 @@ var sendNoRetryMethod = Sender.prototype.sendNoRetry = function (message, regist
 		}
 		callback(null, dataObj);
 	}).error(function(data, status, headers, config) {
+		alert('Error: '+status+'; data: '+data);
 		return callback(status, null);
 	});
 };
@@ -257,7 +258,9 @@ function serializeGame(gameObject) {
 	return myHalf + "|" + theirHalf;
 }
 
-function sendPushNotification(gameState, opponentInfo) {
+function sendPushNotification(requestMaker, gameState, opponentInfo) {
+	if (!opponentInfo.deviceRegId)
+		return false;
 	var message = new Message({
 	    collapseKey: 'com.mobilewordduel',
 	    delayWhileIdle: true,
@@ -270,7 +273,7 @@ function sendPushNotification(gameState, opponentInfo) {
 	    }
 	});
 	
-	var sender = new Sender('AIzaSyApAdaVOhDgJn9_gkhm_TSptw0TM0FgaSA');
+	var sender = new Sender('AIzaSyApAdaVOhDgJn9_gkhm_TSptw0TM0FgaSA', null, requestMaker);
 	var registrationIds = [];
 	
 	registrationIds.push(opponentInfo.deviceRegId); 
@@ -281,4 +284,5 @@ function sendPushNotification(gameState, opponentInfo) {
 	sender.send(message, registrationIds, 4, function (err, result) {
 	    alert("err: "+err+"; result: "+result);
 	});
+	return true;
 }
