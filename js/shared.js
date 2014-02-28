@@ -76,20 +76,21 @@ function deserializeAndStoreGameState(opponentEmail, gameState) {
 	if (window.localStorage.getItem(opponentEmail)) {
 		game = JSON.parse(window.localStorage.getItem(opponentEmail));
 	}
-	game.yourWord = getSecretWord(split[1]);
+	//game.yourWord = getSecretWord(split[1]);
 	game.theirWord = getSecretWord(split[0]);
-	game.rounds = getRounds(split[1], split[0]);
+	game.rounds = getRounds(split[1], split[0], game.rounds);
 
 	function getSecretWord(segment) {
 		return segment.length > 3 ? segment.slice(0, 4) : '';
 	}
 
-	function getRounds(yours, theirs) {
+	function getRounds(yours, theirs, existingRounds) {
 		var rounds = [];
 		yours = yours.slice(4);
 		theirs = theirs.slice(4);
 		while (yours.length > 0 || theirs.length > 0) {
-			rounds.push({yours: yours.slice(0, 4), theirs: theirs.slice(0, 4)})
+			var yourGuess = existingRounds ? existingRounds[rounds.length] : yours.slice(0, 4);
+			rounds.push({yours: yourGuess, theirs: theirs.slice(0, 4)})
 			yours = yours.slice(4);
 			theirs = theirs.slice(4);
 		}
