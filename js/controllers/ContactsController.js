@@ -91,6 +91,7 @@ function processContacts(contacts) {
 		}
 	}
 	$('#contactsBus').trigger('successfulContactsCallback', [normalizedContacts]);
+	spinnerplugin.hide();
 }
 
 var app = {
@@ -102,15 +103,13 @@ var app = {
 			options.filter = '';
 			options.multiple = true;
 
-			spinnerplugin.show();
 			navigator.contacts.find(fields,
 				function (contacts) {
 					processContacts(contacts);
-					spinnerplugin.hide();
 				},
 				function (error) {
-					notify('Unable to show contacts. Error: ' + error, 'Error');
 					spinnerplugin.hide();
+					notify('Unable to show contacts. Error: ' + error, 'Error');
 				},
 				options);
 		} else {
@@ -121,6 +120,7 @@ var app = {
 	
 };
 
+spinnerplugin.show();
 function onDeviceReady() {
 	app.initialize();
 }
