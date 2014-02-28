@@ -7,16 +7,20 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 	var GAME_CHOOSE_WORD_STATE = 'choose-word';
 	var GAME_WAITING_STATE = 'waiting';
 	var GAME_PLAYING_STATE = 'playing';
-
-	$scope.name = gamePlayStorage.getMyName();
-	$scope.opponentName = loadOpponentInfo(urlParams.opponent).name;
-	$scope.game = loadGameState(urlParams.opponent);
-	$scope.guess = '';
 	
-	$scope.reminderSent = false;
-
-	var state = GAME_CHOOSE_WORD_STATE;
-	updateGameState($scope.game);
+	try {
+		$scope.name = gamePlayStorage.getMyName();
+		$scope.opponentName = loadOpponentInfo(urlParams.opponent).name;
+		$scope.game = loadGameState(urlParams.opponent);
+		$scope.guess = '';
+		
+		$scope.reminderSent = false;
+	
+		var state = GAME_CHOOSE_WORD_STATE;
+		updateGameState($scope.game);
+	} catch (ex) {
+		alert(ex);
+	}
 
 	// listen for external game state changes
 	$('#stateBus').bind('successfulStateCallback', function() {
