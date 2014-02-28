@@ -43,7 +43,7 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 			players.push({"email":contact.emailAddress,"name":contact.displayName,"deviceRegId":null});
 		gamePlayStorage.setPlayerList(players);
 
-		$window.location.href = 'index.html';
+		$window.location = 'index.html';
 	}
 
 	$('#contactsBus').bind('successfulContactsCallback', function(e, contacts) {

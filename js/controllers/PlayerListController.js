@@ -1,16 +1,16 @@
 wordDuel.controller("PlayerListController", function($scope, $window, $http, $timeout, gamePlayStorage){
 	$scope.playerList = gamePlayStorage.getPlayerList();
 
-	// TODO: change these to settings or something more elegant (this is done in two places: PlayerList and Contacts Controllers).
-	gamePlayStorage.initializeMyEmail();
-	gamePlayStorage.initializeMyName();
-	
 	if (!$scope.playerList) {
 		gamePlayStorage.setPlayerList([]);
 		$scope.playerList = gamePlayStorage.getPlayerList();
 	}
 	
 	$scope.selectPlayer = function(player) {
+		// TODO: change these to settings or something more elegant (this is done in two places: PlayerList and Contacts Controllers).
+		gamePlayStorage.initializeMyEmail();
+		gamePlayStorage.initializeMyName();
+
 		$window.location = "gamePlay.html?opponent="+player.email;
 	};
 	
