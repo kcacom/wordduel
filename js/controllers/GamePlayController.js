@@ -190,9 +190,9 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 
 	function getButtonText(state) {
 		if (state === GAME_CHOOSE_WORD_STATE)
-			return "Choose Secret Word";
+			return "Choose Word";
 		if (state === GAME_WAITING_STATE)
-			return "Waiting For Turn...";
+			return "Waiting...";
 		return "Guess";
 	};
 });
