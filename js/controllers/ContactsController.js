@@ -102,16 +102,12 @@ var app = {
 			options.filter = '';
 			options.multiple = true;
 
-			navigator.notification.activityStart("Your message....", "loading");
-
 			navigator.contacts.find(fields,
 				function (contacts) {
 					processContacts(contacts);
-					navigator.notification.activityStop();
 				},
 				function (error) {
 					notify('Unable to show contacts. Error: ' + error, 'Error');
-					navigator.notification.activityStop();
 				},
 				options);
 		} else {
