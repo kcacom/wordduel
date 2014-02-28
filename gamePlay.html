@@ -17,7 +17,7 @@
 			<section class="row">
 				<div class="col-xs-6">
 					<h2>{{name}}</h2>
-					<h2>????</h2>
+					<h2>{{game.theirWord.length > 0 ? '????' : ''}}</h2>
 				</div>
 				<div class="col-xs-6">
 					<h2>{{opponentName}}</h2>
@@ -48,15 +48,14 @@
 		</section>
 		<section id="lower" class="container-fluid top-spacing">
 			<section class="row top-spacing">
-				<div class="col-xs-2"></div>
-				<div class="col-xs-8">
+				<div class="col-xs-12">
+					<span>&nbsp;&nbsp;</span>
 					<button type="button" class="btn btn-default"></button>
 					<button type="button" class="btn btn-default"></button>
 					<button type="button" class="btn btn-default"></button>
 					<button type="button" class="btn btn-default"></button>
-					<button id="guess" type="button" class="btn btn-primary">Guess</button>
+					<button id="guess" type="button" class="btn btn-primary">{{buttonText}}</button>
 				</div>
-				<div class="col-xs-2"></div>
 			</section>
 			<section id="keyboard">
 				<div class="row top-spacing">
