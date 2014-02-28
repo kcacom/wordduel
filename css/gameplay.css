@@ -2,8 +2,8 @@
 	margin-top: 5px;
 }
 .btn-default {
-	height: 35px;
-	width: 35px;
+	height: 33px;
+	width: 33px;
 }
 h1 {
 	text-align: center;
@@ -23,8 +23,13 @@ ul {
 #lower {
 	border-top: solid 1px #cccccc;
 }
+#guess {
+	padding-left: 0;
+	padding-right: 0;
+	width: 131px;
+}
 #backspace {
-	width: 73px;
+	width: 70px;
 }
 .impossible {
 	background-color: #808080;
