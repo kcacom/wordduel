@@ -147,10 +147,11 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		var roundsData = [];
 		if (game.rounds) {
 			for (var i=0; i<game.rounds.length; i+=1) {
-				var one = typeof game.rounds[i].yours === "string" ? game.rounds[i].yours : "";
+				if (typeof game.rounds[i].yours !== "string")
+					game.rounds[i].yours = "";
 				roundsData[i] = {
 					yours: {
-						parts: one.split(''),
+						parts: game.rounds[i].yours.split(''),
 						matches: getMatches(game.rounds[i].yours, game.theirWord)
 					},
 					theirs: {
