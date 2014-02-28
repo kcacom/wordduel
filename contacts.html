@@ -10,18 +10,16 @@
     </head>
     <body ng-app="wordduel">
     	<h1>Word Duel</h1>
-        
-        <div id="contacts"></div>
-        
+
         <div ng-controller="ContactsController">
-        	<div ng-repeat="contact in contacts" class="row" ng-click="sendEmailTo('{{contact.emails[0].value}}', '{{contact.name.givenName}} {{contact.name.familyName}}')">
-        		<div class="col-md-6 name">{{contact.name.givenName}} {{contact.name.familyName}}</div>
-        		<div class="col-md-6 email">{{contact.emails[0].value}}</div>
+        	<div ng-repeat="contact in contacts" class="row" ng-click="selectContact('{{contact.displayName}}', '{{contact.givenName}}', '{{contact.familyName}}', '{{contact.email}}')">
+        		<div class="col-md-6 name">{{contact.displayName}}</div>
+        		<div class="col-md-6 email">{{contact.emailAddress}}</div>
         	</div>
         </div>
 
         <a href="index.html" class="btn btn-default btn-lg btn-block">Cancel</a>
-        
+
         <input type="hidden" id="contactsBus" />
 
         <script type="text/javascript" src="js/vendor/jquery-1.10.2.min.js"></script>

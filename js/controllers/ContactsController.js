@@ -1,67 +1,91 @@
-
 var MY_DEVICE_REG_ID = "myDeviceRegId";
 
 var wordduel = angular.module('wordduel', []);
 
-wordduel.controller("ContactsController", function($scope, $window, $timeout){
-	$scope.contacts = [
-				{"name":{"givenName":"Patrick","familyName":"Morrow"},"emails":[{"type":"home","value":"pat@themorrowgroup.com","pref":true}]},
-				{"name":{"givenName":"Teri","familyName":"Morrow"},"emails":[{"type":"home","value":"teri@themorrowgroup.com","pref":true}]},
-				{"name":{"givenName":"Joseph","familyName":"Morrow"},"emails":[{"type":"home","value":"joe@themorrowgroup.com","pref":true},{"type":"home","value":"joseph@themorrowgroup.com","pref":false}]}
-			];
-	
-	
-	$('#contactsBus').bind('successfulContactsCallback', function(e) {
-		$scope.initialize();
-	});
-	
-	$scope.sendEmailTo = function(emailAddress, name) {
+wordduel.controller("ContactsController", function($scope, $window) {
+	$scope.contacts = [];
+
+	$scope.selectContact = function(displayName, givenName, familyName, emailAddress) {
+		emailContact(displayName, givenName, familyName, emailAddress);
+	};
+
+	function emailContact(displayName, givenName, familyName, emailAddress) {
 		var deviceRegId = $window.localStorage.getItem(MY_DEVICE_REG_ID);
 		if (!deviceRegId) {
-			self.notify('Unable to send an invitation. Not able to contact Google Cloud Messaging service!', 'Error');
+			notify('Unable to send an invitation. Not able to contact Google Cloud Messaging service!', 'Error');
 			return;
 		}
-		var subject = "Play Word Duel Invitation";
-		var body = "Hello "+name+",<br/>";
-		body += "Get the app here: <a href='https://play.google.com/store/apps/details?id=com.mobilewordduel'>Word Duel</a><br/>";
-		body += "Then accept the invitation to play: <a href='mobilewordduel://invite/?deviceRegId="+deviceRegId+"&inviterName=Bob&inviterEmail=kelvcutler@gmail.com'>Play!</a>";		
-		var toRecipients = [emailAddress,];
-		window.plugins.emailComposer.showEmailComposerWithCallback($scope.emailSentCallback,subject,body,toRecipients,null,null,true);
-	};
-	$scope.emailSentCallback = function() {
-		self.notify('Player invited!', 'Info');
-	};
-	
-	var notify = function (message, title) {
-		if (navigator.notification) {
-			navigator.notification.alert(message, null, title, 'OK');
-		} else {
-			alert(title ? (title + ": " + message) : message);
-		}
-	};
-	
-	$scope.initialize = function() {
+		var subject = 'Play Word Duel Invitation';
+		var body = 'Hello ' + name + ',<br/>';
+		body += 'Get the app here: <a href="https://play.google.com/store/apps/details?id=com.mobilewordduel">Word Duel</a><br/>';
+		body += 'Then accept the invitation to play: <a href="mobilewordduel://invite/?deviceRegId=' + deviceRegId + '&inviterName=Bob&inviterEmail=kelvcutler@gmail.com">Play!</a>';		
+		var recipients = [emailAddress,];
+		$window.plugins.emailComposer.showEmailComposerWithCallback(emailContactCallback, subject, body, recipients, null, null, true);
+	}
+	function emailContactCallback() {
+		notify('Player invited!', 'Info');
+	}
+
+	$('#contactsBus').bind('successfulContactsCallback', function(e, contacts) {
+		$scope.contacts = contacts;
+	});
+});
+
+function notify(message, title) {
+	if (navigator.notification) {
+		navigator.notification.alert(message, null, title, 'OK');
+	} else {
+		alert(title ? (title + ": " + message) : message);
+	}
+};
+
+var app = {
+
+	initialize: function() {
+		var self = this;
+
 		if (navigator.contacts) {
-			var fields = ['name', 'emails'];
+			var fields = ['displayName', 'name', 'emails'];
 			var options = new ContactFindOptions();
 			options.filter = '';
 			options.multiple = true;
+
+			self.notify('find', 'info');
 			navigator.contacts.find(fields,
 				function (contacts) {
-					$scope.$apply(function() {
-						$scope.contacts = contacts;
-					});
+					self.notify('success', 'info');
+					var normalizedContacts = [];
+					for (var i = 0; i < contacts.length; i++) {
+						var contact = contacts[i];
+						var emailAddress = '';
+						for (var ii = 0; contact.emails && ii < contact.emails.length; ii++) {
+							if (contact.emails[ii].pref) {
+								emailAddress = contact.emails[ii].value || '';
+								break;
+							}
+						};
+						normalizedContacts.push({
+							"displayName": contact.displayName || '',
+							"givenName": contact.name.givenName || '',
+							"familyName": contact.name.familyName || '',
+							"emailAddress": emailAddress
+						});
+					}
+					$('#contactsBus').trigger('successfulContactsCallback', normalizedContacts);
 				},
 				function (error) {
-					notify(error, 'error');
+					self.notify('Unable to show contacts. Error: ' + error, 'Error');
 				},
 				options);
 		} else {
-			// TODO: Can't get contacts
-			notify('error', 'error');
+			self.notify('Unable to show contacts. Error: PhoneGap is unable to get the contacts.', 'Error');
 		}
-	};
+		
+	}
 	
-	$timeout($scope.initialize, 1000);
-});
+};
 
+function onDeviceReady() {
+	app.initialize();
+}
+document.addEventListener("deviceready", onDeviceReady, false);
