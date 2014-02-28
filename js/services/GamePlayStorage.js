@@ -28,7 +28,7 @@ wordDuel.factory('gamePlayStorage', function () {
 			while (myemail.length == 0) {
 				myemail = prompt('Enter your email?');
 			}
-			setString(MY_EMAIL, myemail)
+			setString(MY_EMAIL, myemail);
 		},
 		getMyEmail: function () {
 			return getString(MY_EMAIL, '');
@@ -41,7 +41,7 @@ wordDuel.factory('gamePlayStorage', function () {
 			while (myname.length == 0) {
 				myname = prompt('Enter your name?');
 			}
-			setString(MY_NAME, myname)
+			setString(MY_NAME, myname);
 		},
 		getMyName: function () {
 			return getString(MY_NAME, '');
