@@ -19,7 +19,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 	// listen for external game state changes
 	$('#stateBus').bind('successfulStateCallback', function() {
 		$scope.$apply(function () {
-			$scope.game = loadGameState($scope.game.opponent);
+			$scope.game = loadGameState(urlParams.opponent);
 			updateGameState($scope.game);
 		});
 	});
@@ -32,6 +32,17 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 	$scope.backspace = function () {
 		if ($scope.guess.length === 0) return;
 		$scope.guess = $scope.guess.slice(0, -1);
+	};
+
+	$scope.toggleLetterState = function(letter) {
+		var letterState = $scope.game.letterStates[letter];
+		if (letterState === LETTER_POSSIBLE_STATE)
+			$scope.game.letterStates[letter] = LETTER_IMPOSSIBLE_STATE;
+		else if (letterState === LETTER_IMPOSSIBLE_STATE)
+			$scope.game.letterStates[letter] = LETTER_DEFINITE_STATE;
+		else
+			$scope.game.letterStates[letter] = LETTER_POSSIBLE_STATE;
+		updateGameState($scope.game);
 	};
 
 	$scope.guessWord = function () {
@@ -50,7 +61,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		updateGameState($scope.game);
 		
 		var opponentInfo = loadOpponentInfo(urlParams.opponent);
-		sendPushNotification($http, opponentInfo.deviceRegId, gamePlayStorage.getMyEmail(), serializeGame($scope), null);
+		sendPushNotification($http, opponentInfo.deviceRegId, gamePlayStorage.getMyEmail(), serializeGame($scope.game), null);
 	};
 
 	function loadOpponentInfo(opponent) {
@@ -67,7 +78,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		var current = $scope.game;
 		var game = gamePlayStorage.getGameState(opponent);
 
-		if (game.opponent === undefined) return createNewGame(opponent);
+		if (game.opponent === undefined) return createNewGame();
 
 		if (current !== undefined) {
 			game.letterStates = current.letterStates;
@@ -78,9 +89,8 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		return game;
 	}
 
-	function createNewGame(opponent) {
+	function createNewGame() {
 		return {
-			opponent: opponent,
 			yourWord: '',
 			theirWord: '',
 			rounds: [],
@@ -90,32 +100,32 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 
 	function createLetterStates() {
 		return {
-			a: LETTER_POSSIBLE_STATE,
-			b: LETTER_POSSIBLE_STATE,
-			c: LETTER_POSSIBLE_STATE,
-			d: LETTER_POSSIBLE_STATE,
-			e: LETTER_POSSIBLE_STATE,
-			f: LETTER_POSSIBLE_STATE,
-			g: LETTER_POSSIBLE_STATE,
-			h: LETTER_POSSIBLE_STATE,
-			i: LETTER_POSSIBLE_STATE,
-			j: LETTER_POSSIBLE_STATE,
-			k: LETTER_POSSIBLE_STATE,
-			l: LETTER_POSSIBLE_STATE,
-			m: LETTER_POSSIBLE_STATE,
-			n: LETTER_POSSIBLE_STATE,
-			o: LETTER_POSSIBLE_STATE,
-			p: LETTER_POSSIBLE_STATE,
-			q: LETTER_POSSIBLE_STATE,
-			r: LETTER_POSSIBLE_STATE,
-			s: LETTER_POSSIBLE_STATE,
-			t: LETTER_POSSIBLE_STATE,
-			u: LETTER_POSSIBLE_STATE,
-			v: LETTER_POSSIBLE_STATE,
-			w: LETTER_POSSIBLE_STATE,
-			x: LETTER_POSSIBLE_STATE,
-			y: LETTER_POSSIBLE_STATE,
-			z: LETTER_POSSIBLE_STATE
+			A: LETTER_POSSIBLE_STATE,
+			B: LETTER_POSSIBLE_STATE,
+			C: LETTER_POSSIBLE_STATE,
+			D: LETTER_POSSIBLE_STATE,
+			E: LETTER_POSSIBLE_STATE,
+			F: LETTER_POSSIBLE_STATE,
+			G: LETTER_POSSIBLE_STATE,
+			H: LETTER_POSSIBLE_STATE,
+			I: LETTER_POSSIBLE_STATE,
+			J: LETTER_POSSIBLE_STATE,
+			K: LETTER_POSSIBLE_STATE,
+			L: LETTER_POSSIBLE_STATE,
+			M: LETTER_POSSIBLE_STATE,
+			N: LETTER_POSSIBLE_STATE,
+			O: LETTER_POSSIBLE_STATE,
+			P: LETTER_POSSIBLE_STATE,
+			Q: LETTER_POSSIBLE_STATE,
+			R: LETTER_POSSIBLE_STATE,
+			S: LETTER_POSSIBLE_STATE,
+			T: LETTER_POSSIBLE_STATE,
+			U: LETTER_POSSIBLE_STATE,
+			V: LETTER_POSSIBLE_STATE,
+			W: LETTER_POSSIBLE_STATE,
+			X: LETTER_POSSIBLE_STATE,
+			Y: LETTER_POSSIBLE_STATE,
+			Z: LETTER_POSSIBLE_STATE
 		};
 	}
 
@@ -155,7 +165,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		else
 			state = GAME_PLAYING_STATE;
 		$scope.buttonText = getButtonText(state);
-		gamePlayStorage.setGameState(game.opponent, game);
+		gamePlayStorage.setGameState(urlParams.opponent, game);
 	}
 
 	function getButtonText(state) {

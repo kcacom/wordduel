@@ -30,7 +30,7 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 
 		var subject = 'Play Word Duel Invitation';
 		var body = 'Hello ' + contact.displayName + ',<br/>';
-		body += 'Get the app here: <a href="https://play.google.com/store/apps/details?id=com.mobilewordduel">Word Duel</a><br/>';
+		body += 'Get the app here: <a href="https://play.google.com/store/apps/details?id=com.playwordduel">Word Duel</a><br/>';
 		body += 'Then accept the invitation to play: <a href="https://googledrive.com/host/0B42c8HW7dKbZYUZlZFJaZVU5RlU/transfer.html?deviceRegId=' + deviceRegId + '&inviterName=' + myname + '&inviterEmail=' + myemail +'">Play!</a>';		
 		var torecipients = [contact.emailAddress];
 		$window.plugins.emailComposer.showEmailComposerWithCallback(null, subject, body, torecipients, null, null, true, null, null);
@@ -38,7 +38,7 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 		// TODO: should use the callback, but the callback isn't being called
 
 		var players = gamePlayStorage.getPlayerList();
-		players.push({"email":contact.emailAddress,"name":contact.displayName,"deviceRegId":deviceRegId});
+		players.push({"email":contact.emailAddress,"name":contact.displayName,"deviceRegId":null});
 		gamePlayStorage.setPlayerList(players)
 
 		notify('Player invited!', 'Info');

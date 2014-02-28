@@ -240,7 +240,6 @@ Sender.prototype.send = function (message, registrationId, retries, callback) {
     }
 };
 
-
 // HELPER METHODS
 
 function getUTF8Length(string) {
@@ -260,14 +259,14 @@ function getUTF8Length(string) {
     return utf8length;
  }
 
-function serializeGame(gameObject) {
+function serializeGame(game) {
 	var myHalf = "";
 	var theirHalf = "";
-	for (var i=0; i<gameObject.rounds.length; i++) {
-		myHalf += gameObject.rounds[i].yours;
-		theirHalf += gameObject.rounds[i].theirs;
+	for (var i=0; i<game.rounds.length; i++) {
+		myHalf += game.rounds[i].yours;
+		theirHalf += game.rounds[i].theirs;
 	}
-	return myHalf + "|" + theirHalf;
+	return game.yourWord + myHalf + "|" + game.theirWord + theirHalf;
 }
 
 function sendPushNotification(requestMaker, sendToDeviceRegId, myEmail, gameState, myDeviceRegId) {
