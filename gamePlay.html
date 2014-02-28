@@ -99,6 +99,8 @@
 						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.X === 'p', impossible: game.letterStates.X === 'i', definite: game.letterStates.X === 'd'}" data-ng-click="keyPress('X')">X</button>
 						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.Y === 'p', impossible: game.letterStates.Y === 'i', definite: game.letterStates.Y === 'd'}" data-ng-click="keyPress('Y')">Y</button>
 						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.Z === 'p', impossible: game.letterStates.Z === 'i', definite: game.letterStates.Z === 'd'}" data-ng-click="keyPress('Z')">Z</button>
+						<button id="reset" type="button" class="btn btn-default" data-ng-click="resetGame()">Reset</button>
+						<button id="exit" type="button" class="btn btn-default" data-ng-click="exitGame()">Exit</button>
 					</div>
 				</div>
 			</section>

@@ -1,6 +1,6 @@
 'use strict';
 
-wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePlayStorage) {
+wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, $window, gamePlayStorage) {
 	var LETTER_POSSIBLE_STATE = 'p';
 	var LETTER_IMPOSSIBLE_STATE = 'i';
 	var LETTER_DEFINITE_STATE = 'd';
@@ -38,6 +38,18 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 	$scope.backspace = function () {
 		if ($scope.guess.length === 0) return;
 		$scope.guess = $scope.guess.slice(0, -1);
+	};
+
+	// TODO: get rid of this hack, turn button into a clear or i give up
+	$scope.resetGame = function () {
+		var email = loadOpponentInfo(urlParams.opponent).email;
+		delete $window.locationStorage[email];
+
+		$window.location = 'index.html';
+	};
+
+	$scope.exitGame = function () {
+		$window.location = 'index.html';
 	};
 
 	$scope.toggleLetterState = function(letter) {

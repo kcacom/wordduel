@@ -37,3 +37,11 @@ ul {
 .definite {
 	background-color: #ffff00;
 }
+#reset {
+	height: 33px;
+	width: 70px;
+}
+#exit {
+	height: 33px;
+	width: 70px;
+}
