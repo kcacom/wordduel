@@ -5,5 +5,10 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 	var THEIR_TURN = 'their-turn';
 
 	$scope.name = gamePlayStorage.getMyName();
-	//$scope.game.state = MY_TURN;
+	$scope.game = {};
+	$scope.game.state = MY_TURN;
+
+	function loadNewGame() {
+
+	}
 });
