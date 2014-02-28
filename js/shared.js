@@ -43,13 +43,13 @@ var app = {
 	            	try {
 		            	if (e.payload.gameState && e.payload.opponentEmail) {
 		              		deserializeAndStoreGameState(e.payload.opponentEmail, e.payload.gameState);
-		              		if ($('#stateBus').length) {
-		              			$('#stateBus').trigger('successfulStateCallback', []);
+		              		if (stateBusJqryObj) {
+		              			stateBusJqryObj.trigger('successfulStateCallback', []);
 		              		}
 		            	} else if (e.payload.opponentEmail && e.payload.deviceRegId) {
 		            		updatePlayerList(e.payload.opponentEmail, e.payload.deviceRegId);
-		              		if ($('#playerListBus').length) {
-		              			$('#playerListBus').trigger('playerListUpdated', []);
+		              		if (playerListBusJqryObj) {
+		              			playerListBusJqryObj.trigger('playerListUpdated', []);
 		              		}
 		              		alert("success"+localStorage["player-list"]);
 		            	} else {
@@ -120,3 +120,15 @@ function updatePlayerList(opponentEmail, deviceRegId) {
 	}
 	localStorage["player-list"] = JSON.stringify(players);
 }
+
+
+var playerListBusJqryObj = null;
+var stateBusJqryObj = null;
+
+
+$(document).ready(function() {
+	if ($('#playerListBus').length)
+		playerListBusJqryObj = $('#playerListBus');
+	if ($('#stateBus').length)
+		stateBusJqryObj = $('#stateBus');
+});
