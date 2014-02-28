@@ -19,7 +19,6 @@ var app = {
                 if ( e.regid.length > 0 )
                 {
                 	window.localStorage.setItem(MY_DEVICE_REG_ID, e.regid);
-                	app.showAlert(""+e.regid, "RegId");
                 }
             break;
  
@@ -63,13 +62,13 @@ var urlCalled = null;
 
 $(document).ready(function() {
 	if (urlCalled) {
-		document.getElementById('test').value = url;
-		document.getElementById('test').change();
+		document.getElementById('newInvite').value = url;
+		document.getElementById('newInvite').change();
 		urlCalled = null;
 	}
 });
 function handleOpenURL(url) {
-	if(document.getElementById('test')) {
+	if(document.getElementById('newInvite')) {
 		$('#newInvite').val(url);
 		$('#newInvite').change();
 	} else {

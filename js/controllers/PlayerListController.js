@@ -13,7 +13,7 @@ wordDuel.controller("PlayerListController", function($scope, $window, $timeout, 
 	$('#newInvite').change(function() {
 		$scope.$apply(function() {
 			var match,
-				val = $('#inviteBus').val(),
+				val = $('#newInvite').val(),
 				pl     = /\+/g,  // Regex for replacing addition symbol with a space
 				search = /([^&=]+)=?([^&]*)/g,
 				decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
