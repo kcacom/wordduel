@@ -58,18 +58,21 @@ function onDeviceReady() {
 };
 document.addEventListener("deviceready", onDeviceReady, false);
 
+var urlCalled = null;
 
+
+$(document).ready(function() {
+	if (urlCalled) {
+		document.getElementById('test').value = url;
+		document.getElementById('test').change();
+		urlCalled = null;
+	}
+});
 function handleOpenURL(url) {
-	setTimeout(function() {
-		var match,
-			pl     = /\+/g,  // Regex for replacing addition symbol with a space
-			search = /([^&=]+)=?([^&]*)/g,
-			decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-			query  = url.substr(url.indexOf("?")+1);
-	
-		var urlParams = {};
-		while (match = search.exec(query))
-			urlParams[decode(match[1])] = decode(match[2]);
-		$('#inviteBus').trigger('newInvite', [urlParams["deviceRegId"], urlParams["inviterName"], urlParams["inviterEmail"]]);
-	}, 0);
+	if(document.getElementById('test')) {
+		$('#newInvite').val(url);
+		$('#newInvite').change();
+	} else {
+		urlCalled = url;
+	}
 };
