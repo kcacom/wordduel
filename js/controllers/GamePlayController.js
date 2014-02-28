@@ -147,12 +147,10 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		var roundsData = [];
 		if (game.rounds) {
 			for (var i=0; i<game.rounds.length; i+=1) {
-				var one = typeof game.rounds[i].yours === "string" ? game.rounds[i].yours : JSON.stringify(game.rounds[i].yours);
-				var two = typeof game.rounds[i].theirs === "string" ? game.rounds[i].theirs : JSON.stringify(game.rounds[i].theirs);
-				alert("loading round"+i+":"+one+","+two);
+				var one = typeof game.rounds[i].yours === "string" ? game.rounds[i].yours : "";
 				roundsData[i] = {
 					yours: {
-						parts: game.rounds[i].yours.split(''),
+						parts: one.split(''),
 						matches: getMatches(game.rounds[i].yours, game.theirWord)
 					},
 					theirs: {
