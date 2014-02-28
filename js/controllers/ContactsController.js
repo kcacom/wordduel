@@ -9,7 +9,7 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 		emailContact(displayName, givenName, familyName, emailAddress);
 	};
 
-	function emailContact(displayName, givenName, familyName, emailAddress) {
+	function emailContact(contact) {
 		var deviceRegId = 'TEST';
 		/*
 		var deviceRegId = $window.localStorage.getItem(MY_DEVICE_REG_ID);
@@ -19,20 +19,20 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 		}
 		*/
 		var subject = 'Play Word Duel Invitation';
-		var body = 'Hello ' + displayName + ',<br/>';
+		var body = 'Hello ' + contact.displayName + ',<br/>';
 		body += 'Get the app here: <a href="https://play.google.com/store/apps/details?id=com.mobilewordduel">Word Duel</a><br/>';
-		body += 'Then accept the invitation to play: <a href="mobilewordduel://invite/?deviceRegId=' + deviceRegId + '&inviterName=Bob&inviterEmail=kelvcutler@gmail.com">Play!</a>';		
-		var torecipients = [emailAddress];
+		body += 'Then accept the invitation to play: <a href="mobilewordduel://invite/?deviceRegId=' + contact.deviceRegId + '&inviterName=Bob&inviterEmail=kelvcutler@gmail.com">Play!</a>';		
+		var torecipients = [contact.emailAddress];
 		$window.plugins.emailComposer.showEmailComposerWithCallback(function(r) {
 			notify('callback return: ' + r, 'Debug');
-			emailContactCallback(displayName, givenName, familyName, emailAddress, deviceRegId);
+			emailContactCallback(contactdisplayName, deviceRegId);
 		}, subject, body, torecipients, null, null, true, null, null);
 	}
-	function emailContactCallback(displayName, givenName, familyName, emailAddress, deviceRegId) {
+	function emailContactCallback(contact, deviceRegId) {
 		notify('Player invited!', 'Info');
 
 		var players = gamePlayStorage.getPlayerList();
-		players.push({"email":emailAddress,"name":displayName,"deviceRegId":deviceRegId});
+		players.push({"email":contact.emailAddress,"name":contact.displayName,"deviceRegId":deviceRegId});
 		notify(JSON.stringify(players));
 		//gamePlayStorage.setPlayerList(players)
 
@@ -58,6 +58,12 @@ function processContacts(contacts) {
 	var normalizedContacts = [];
 	for (var i = 0; i < contacts.length; i++) {
 		var contact = contacts[i];
+		var displayName = contact.displayName || '';
+		var givenName = contact.name.givenName || '';
+		var familyName = contact.name.familyName || '';
+		if (displayName.length == 0) {
+			displayName = givenName + (familyName.length > 0 ? ' ' + familyName : '');
+		}
 		var emailAddress = '';
 		for (var ii = 0; contact.emails && ii < contact.emails.length; ii++) {
 			if (ii == 0) {
@@ -68,12 +74,14 @@ function processContacts(contacts) {
 				break;
 			}
 		};
-		normalizedContacts.push({
-			"displayName": contact.displayName || '',
-			"givenName": contact.name.givenName || '',
-			"familyName": contact.name.familyName || '',
-			"emailAddress": emailAddress
-		});
+		if (displayName.length > 0 && emailAddress.length > 0) {
+			normalizedContacts.push({
+				"displayName": displayName,
+				"givenName": givenName,
+				"familyName": familyName,
+				"emailAddress": emailAddress
+			});
+		}
 	}
 	$('#contactsBus').trigger('successfulContactsCallback', [normalizedContacts]);
 }
