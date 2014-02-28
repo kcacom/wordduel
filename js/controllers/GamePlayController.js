@@ -147,7 +147,9 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		var roundsData = [];
 		if (game.rounds) {
 			for (var i=0; i<game.rounds.length; i+=1) {
-				alert("loading round"+i+":"+game.rounds[i].yours+","+game.rounds[i].theirs);
+				var one = typeof game.rounds[i].yours === "string" ? game.rounds[i].yours : JSON.stringify(game.rounds[i].yours);
+				var two = typeof game.rounds[i].theirs === "string" ? game.rounds[i].theirs : JSON.stringify(game.rounds[i].theirs);
+				alert("loading round"+i+":"+one+","+two);
 				roundsData[i] = {
 					yours: {
 						parts: game.rounds[i].yours.split(''),
