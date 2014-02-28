@@ -137,10 +137,14 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 	}
 
 	function getMatches(guess, word) {
-		var matches = guess.match(new RegExp('[' + word + ']', 'gi'));
-		if (matches === null)
-			return 0;
-		return matches.length;
+		var matches = 0;
+
+		for (var i=0; i<word.length; i+=1) {
+			if (guess.indexOf(word[i]) >= 0)
+				matches += 1;
+		}
+
+		return matches;
 	}
 
 	function updateGameState(game) {
