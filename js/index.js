@@ -56,9 +56,35 @@ var app = {
     
 };
 
+function deserializeAndStoreGameState(opponentEmail, gameState) {
+	var split = gameState.split('|');
+	var game = {
+		yourWord: getSecretWord(split[1]),
+		theirWord: getSecretWord(split[0]),
+		rounds: getRounds(split[1], split[0])
+	};
+
+	function getSecretWord(segment) {
+		return segment.length > 3 ? segment.slice(0, 4) : '';
+	}
+
+	function getRounds(yours, theirs) {
+		var rounds = [];
+		yours = yours.slice(4);
+		theirs = theirs.slice(4);
+		while (yours.length > 0 || theirs.length > 0) {
+			rounds.push({yours: yours.slice(0, 4), theirs: theirs.slice(0, 4)})
+			yours = yours.slice(4);
+			theirs = theirs.slice(4);
+		}
+	}
+
+	window.localStorage.setItem(opponentEmail, JSON.stringify(game));
+}
+
 function onDeviceReady() {
 	app.initialize();
-};
+}
 document.addEventListener("deviceready", onDeviceReady, false);
 
 var urlCalled = null;

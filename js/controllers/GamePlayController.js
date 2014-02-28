@@ -19,7 +19,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 	// listen for external game state changes
 	$('#stateBus').bind('successfulStateCallback', function() {
 		$scope.$apply(function () {
-			$scope.game = loadGameState($scope.game.opponent);
+			$scope.game = loadGameState(urlParams.opponent);
 			updateGameState($scope.game);
 		});
 	});
@@ -61,7 +61,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 		updateGameState($scope.game);
 		
 		var opponentInfo = loadOpponentInfo(urlParams.opponent);
-		sendPushNotification($http, opponentInfo.deviceRegId, gamePlayStorage.getMyEmail(), serializeGame($scope), null);
+		sendPushNotification($http, opponentInfo.deviceRegId, gamePlayStorage.getMyEmail(), serializeGame($scope.game), null);
 	};
 
 	function loadOpponentInfo(opponent) {
@@ -78,7 +78,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 		var current = $scope.game;
 		var game = gamePlayStorage.getGameState(opponent);
 
-		if (game.opponent === undefined) return createNewGame(opponent);
+		if (game.opponent === undefined) return createNewGame();
 
 		if (current !== undefined) {
 			game.letterStates = current.letterStates;
@@ -89,9 +89,8 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 		return game;
 	}
 
-	function createNewGame(opponent) {
+	function createNewGame() {
 		return {
-			opponent: opponent,
 			yourWord: '',
 			theirWord: '',
 			rounds: [],
@@ -166,7 +165,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 		else
 			state = GAME_PLAYING_STATE;
 		$scope.buttonText = getButtonText(state);
-		gamePlayStorage.setGameState(game.opponent, game);
+		gamePlayStorage.setGameState(urlParams.opponent, game);
 	}
 
 	function getButtonText(state) {
