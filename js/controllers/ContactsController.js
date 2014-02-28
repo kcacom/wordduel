@@ -98,6 +98,8 @@ var app = {
 
 	initialize: function() {
 		if (navigator.contacts) {
+			spinnerplugin.show();
+
 			var fields = ['displayName', 'name', 'emails'];
 			var options = new ContactFindOptions();
 			options.filter = '';
@@ -120,7 +122,6 @@ var app = {
 	
 };
 
-spinnerplugin.show();
 function onDeviceReady() {
 	app.initialize();
 }
