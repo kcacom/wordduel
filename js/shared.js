@@ -72,11 +72,13 @@ var app = {
 
 function deserializeAndStoreGameState(opponentEmail, gameState) {
 	var split = gameState.split('|');
-	var game = {
-		yourWord: getSecretWord(split[1]),
-		theirWord: getSecretWord(split[0]),
-		rounds: getRounds(split[1], split[0])
-	};
+	var game = {};
+	if (window.localStorage.getItem(opponentEmail)) {
+		game = JSON.parse(window.localStorage.getItem(opponentEmail));
+	}
+	game.yourWord = getSecretWord(split[1]);
+	game.theirWord = getSecretWord(split[0]);
+	game.rounds = getRounds(split[1], split[0]);
 
 	function getSecretWord(segment) {
 		return segment.length > 3 ? segment.slice(0, 4) : '';

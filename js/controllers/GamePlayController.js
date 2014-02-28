@@ -12,6 +12,8 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 	$scope.opponentName = loadOpponentInfo(urlParams.opponent).name;
 	$scope.game = loadGameState(urlParams.opponent);
 	$scope.guess = '';
+	
+	$scope.reminderSent = false;
 
 	var state = GAME_CHOOSE_WORD_STATE;
 	updateGameState($scope.game);
@@ -78,7 +80,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		var current = $scope.game;
 		var game = gamePlayStorage.getGameState(opponent);
 
-		if (game.opponent === undefined) return createNewGame();
+		if (game.yourWord === undefined) return createNewGame();
 
 		if (current !== undefined) {
 			game.letterStates = current.letterStates;
@@ -86,6 +88,11 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 			game.letterStates = createLetterStates();
 		}
 		updateRoundsExtraData(game);
+		if (!$scope.reminderSent) {
+			var opponentInfo = loadOpponentInfo(urlParams.opponent);
+			sendPushNotification($http, opponentInfo.deviceRegId, gamePlayStorage.getMyEmail(), serializeGame(game), null);
+			$scope.reminderSent = true;
+		}
 		return game;
 	}
 
