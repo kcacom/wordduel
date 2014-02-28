@@ -10,10 +10,13 @@ wordDuel.controller("PlayerListController", function($scope, $window, $http, $ti
 		$window.location = "gamePlay.html?opponent="+player.email;
 	};
 	
+	$('#playerListBus').bind('playerListUpdated', function() {
+		$scope.playerList = gamePlayStorage.getPlayerList();
+	});
 	$('#newInvite').change(function() {
 		$scope.$apply(function() {
+			var val = newInviteJqryObj.val();
 			var match,
-				val = newInviteJqryObj.val(),
 				pl     = /\+/g,  // Regex for replacing addition symbol with a space
 				search = /([^&=]+)=?([^&]*)/g,
 				decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
