@@ -102,7 +102,12 @@ function deserializeAndStoreGameState(opponentEmail, gameState) {
 }
 
 function updatePlayerList(opponentEmail, deviceRegId) {
-	var players = JSON.parse(localStorage["player-list"]);
+	var playerList = localStorage["player-list"];
+	var players;
+	if (playerList)
+		players = JSON.parse(playerList);
+	else
+		players = [];
 	var found = false;
 	for (var i=0; i<players.length; i+=1) {
 		if (players[i].email === opponentEmail) {
