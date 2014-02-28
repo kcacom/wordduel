@@ -1,4 +1,9 @@
-
+app.successHandler = function() {
+	
+};
+app.errorHandler = function() {
+	
+};
 app.initialize = function() {
 	if (window.plugins && window.plugins.pushNotification) {
     	var pushNotification = window.plugins.pushNotification;
