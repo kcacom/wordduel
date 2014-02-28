@@ -22,10 +22,10 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 		var body = 'Hello ' + name + ',<br/>';
 		body += 'Get the app here: <a href="https://play.google.com/store/apps/details?id=com.mobilewordduel">Word Duel</a><br/>';
 		body += 'Then accept the invitation to play: <a href="mobilewordduel://invite/?deviceRegId=' + deviceRegId + '&inviterName=Bob&inviterEmail=kelvcutler@gmail.com">Play!</a>';		
-		var recipients = [emailAddress,];
+		var torecipients = [emailAddress];
 		$window.plugins.emailComposer.showEmailComposerWithCallback(function() {
 			emailContactCallback(displayName, givenName, familyName, emailAddress, deviceRegId);
-		}, subject, body, recipients, null, null, true);
+		}, subject, body, torecipients, null, null, true);
 	}
 	function emailContactCallback(displayName, givenName, familyName, emailAddress, deviceRegId) {
 		notify('Player invited!', 'Info');
