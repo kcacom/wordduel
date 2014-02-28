@@ -10,7 +10,7 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 	};
 
 	function emailContact(displayName, givenName, familyName, emailAddress) {
-		var deviceRegId = 0;
+		var deviceRegId = 'TEST';
 		/*
 		var deviceRegId = $window.localStorage.getItem(MY_DEVICE_REG_ID);
 		if (!deviceRegId) {
