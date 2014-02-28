@@ -24,11 +24,11 @@ wordDuel.factory('gamePlayStorage', function () {
 
 	return {
 		initializeMyEmail: function() {
-			var myemail = gamePlayStorage.getMyEmail();
+			var myemail = getString(MY_EMAIL, '');
 			while (myemail.length == 0) {
 				myemail = prompt('Enter your email?');
 			}
-			gamePlayStorage.setMyEmail(myemail);
+			setString(MY_EMAIL, myemail)
 		},
 		getMyEmail: function () {
 			return getString(MY_EMAIL, '');
@@ -37,11 +37,11 @@ wordDuel.factory('gamePlayStorage', function () {
 			setString(MY_EMAIL, email);
 		},
 		initializeMyName: function() {
-			var myname = gamePlayStorage.getMyName();
+			var myname = getString(MY_NAME, '');
 			while (myname.length == 0) {
 				myname = prompt('Enter your name?');
 			}
-			gamePlayStorage.setMyName(myname);
+			setString(MY_NAME, myname)
 		},
 		getMyName: function () {
 			return getString(MY_NAME, '');
