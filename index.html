@@ -1,25 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=0, initial-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Word Duel</title>
     </head>
     <body ng-app="wordDuel">
-    	<h1>Word Duel</h1>
-        <div ng-controller="PlayerListController">
+    	<h1 id="title">Word Duel</h1>
+        <h4 id="subtitle">Who is the word champion?</h4>
+
+        <div id="players" ng-controller="PlayerListController">
         	<div ng-repeat="player in playerList" class="row" ng-click="selectPlayer(player)">
         		<div class="col-md-6 name">{{player.name}}</div>
         		<div class="col-md-6 email">{{player.email}}</div>
         	</div>
-        	<span>{{inviteReceived}}</span>
         </div>
-        <a href="contacts.html" class="btn btn-default btn-lg btn-block">Add From Contacts</a>
-    	<div>
-    		<a href="gamePlay.html">Goto Game Page</a>
-    	</div>
+
+        <div id="footer">
+            <a href="gamePlay.html" class="btn btn-primary btn-lg btn-block">Continue an active game</a>
+            <a href="contacts.html" class="btn btn-default btn-lg btn-block">Start a new game</a>
+        </div>
         
         <input type="hidden" id="newInvite" />
         
