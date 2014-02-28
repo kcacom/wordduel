@@ -51,16 +51,11 @@ var app = {
 		              		if (playerListBusJqryObj) {
 		              			playerListBusJqryObj.trigger('playerListUpdated', []);
 		              		}
-		              		alert("success"+localStorage["player-list"]);
-		            	} else {
-		            		alert("no options: "+JSON.stringify(e));
 		            	}
 		            } catch(ex) {
 		            	alert(ex);
 		            }
-	            } else {
-		        	alert("no payload: "+JSON.stringify(e));
-		        }
+	            }
             break;
  
             case 'error':

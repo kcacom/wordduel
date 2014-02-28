@@ -8,7 +8,6 @@ app.initialize = function() {
 	if (window.plugins && window.plugins.pushNotification) {
     	var pushNotification = window.plugins.pushNotification;
 		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":GCM_SENDER_ID,"ecb":"app.onNotificationGCM"});
-		alert("Registered with GCM");
 	}
 };
 
