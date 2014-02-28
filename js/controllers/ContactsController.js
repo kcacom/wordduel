@@ -33,12 +33,10 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 		body += 'Get the app here: <a href="https://play.google.com/store/apps/details?id=com.mobilewordduel">Word Duel</a><br/>';
 		body += 'Then accept the invitation to play: <a href="https://googledrive.com/host/0B42c8HW7dKbZYUZlZFJaZVU5RlU/transfer.html?deviceRegId=' + deviceRegId + '&inviterName=' + myname + '&inviterEmail=' + myemail +'">Play!</a>';		
 		var torecipients = [contact.emailAddress];
-		$window.plugins.emailComposer.showEmailComposerWithCallback(function() {
-			emailContactCallback(contact, deviceRegId);
-			notify('after email in callback', 'debug');
-		}, subject, body, torecipients, null, null, true, null, null);
+		$window.plugins.emailComposer.showEmailComposerWithCallback($scope.emailContactCallback, subject, body, torecipients, null, null, true, null, null);
 	}
-	function emailContactCallback(contact, deviceRegId) {
+	$scope.emailContactCallback = function(contact, deviceRegId) {
+		notify('I made it.');
 		var players = gamePlayStorage.getPlayerList();
 		players.push({"email":contact.emailAddress,"name":contact.displayName,"deviceRegId":deviceRegId});
 		gamePlayStorage.setPlayerList(players)
