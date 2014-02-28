@@ -16,17 +16,9 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 			return;
 		}
 
-		// TODO: change these to settings
-		var myname = gamePlayStorage.getMyName() || '';
-		while (myname == null || myname.length == 0) {
-			myname = prompt('Enter your name?');
-		}
-		gamePlayStorage.setMyName(myname);
-		var myemail = gamePlayStorage.getMyEmail() || '';
-		while (myemail == null || myemail.length == 0) {
-			myemail = prompt('Enter your email?');
-		}
-		gamePlayStorage.setMyEmail(myemail);
+		// TODO: change these to settings or something more elegant (this is done in two places: PlayerList and Contacts Controllers).
+		gamePlayStorage.initializeMyEmail();
+		gamePlayStorage.initializeMyName();
 
 		var subject = 'Play Word Duel Invitation';
 		var body = 'Hello ' + contact.displayName + ',<br/>';
