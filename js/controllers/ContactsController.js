@@ -1,4 +1,4 @@
-var MY_DEVICE_REG_ID = "myDeviceRegId";
+var MY_DEVICE_REG_ID = "deviceRegId";
 
 var wordDuel = angular.module('wordDuel', []);
 

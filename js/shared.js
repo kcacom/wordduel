@@ -17,7 +17,7 @@ var urlParams;
 
 
 var GCM_SENDER_ID = "244231786937";
-var MY_DEVICE_REG_ID = "myDeviceRegId";
+var MY_DEVICE_REG_ID = "deviceRegId";
 
 var app = {
 
