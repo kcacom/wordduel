@@ -30,7 +30,7 @@ wordDuel.factory('gamePlayStorage', function () {
 			setString(MY_EMAIL, email);
 		},
 		getMyName: function () {
-			return getString(MY_NAME, 'You');
+			return getString(MY_NAME, '');
 		},
 		setMyName: function (name) {
 			setString(MY_NAME, name);
