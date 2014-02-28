@@ -42,7 +42,11 @@ wordDuel.factory('gamePlayStorage', function () {
 			setString(DEVICE_REG_ID, id);
 		},
 		getPlayerList: function () {
-			return getJson(PLAYER_LIST, '[]');
+			var pList = getJson(PLAYER_LIST, '[]');
+			for (var i=0; i<pList.length; i++)
+				if (pList[i]["$$hashKey"])
+					delete pList[i]["$$hashKey"];
+			return pList;
 		},
 		setPlayerList: function (list) {
 			setJson(PLAYER_LIST, list);
@@ -53,5 +57,5 @@ wordDuel.factory('gamePlayStorage', function () {
 		setGameState: function (playerEmail, state) {
 			setJson(playerEmail, state);
 		}
-	}
+	};
 });
