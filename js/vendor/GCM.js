@@ -258,7 +258,7 @@ function serializeGame(gameObject) {
 	return myHalf + "|" + theirHalf;
 }
 
-function sendPushNotification(requestMaker, gameState, opponentInfo) {
+function sendPushNotification(requestMaker, sendToDeviceRegId, myEmail, gameState, myDeviceRegId) {
 	if (!opponentInfo.deviceRegId)
 		return false;
 	var message = new Message({
@@ -267,7 +267,8 @@ function sendPushNotification(requestMaker, gameState, opponentInfo) {
 	    timeToLive: 3,
 	    data: {
 	        'gameState': gameState,
-	        'opponentEmail': opponentInfo.email,
+	        'deviceRegId': myDeviceRegId,
+	        'opponentEmail': myEmail,
 	        'title': "Game update received",
 	        'message': "Tap to see game"
 	    }
@@ -276,11 +277,12 @@ function sendPushNotification(requestMaker, gameState, opponentInfo) {
 	var sender = new Sender('AIzaSyApAdaVOhDgJn9_gkhm_TSptw0TM0FgaSA', null, requestMaker);
 	var registrationIds = [];
 	
-	registrationIds.push(opponentInfo.deviceRegId); 
+	registrationIds.push(sendToDeviceRegId); 
 	
 	/**
 	 * Params: message-literal, registrationIds-array, No. of retries, callback-function
 	 **/
+	alert("about to call send on sender!");
 	sender.send(message, registrationIds, 4, function (err, result) {
 	    alert("err: "+err+"; result: "+result);
 	});
