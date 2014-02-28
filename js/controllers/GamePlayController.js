@@ -57,10 +57,10 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		if (state === GAME_CHOOSE_WORD_STATE) {
 			$scope.game.yourWord = $scope.guess;
 		} else if (state === GAME_PLAYING_STATE) {
-			if ($scope.game.rounds.length === 0 || $scope.game.rounds[$scope.game.rounds.length - 1].yours.length > 0)
+			if ($scope.game.rounds.length === 0 || ($scope.game.rounds[$scope.game.rounds.length - 1].yours !== undefined && $scope.game.rounds[$scope.game.rounds.length - 1].yours.length > 0))
 				$scope.game.rounds.push({yours: $scope.guess, theirs: ''});
 			else
-				$scope.game.rounds[$scope.game.records.length - 1].yours = $scope.guess;
+				$scope.game.rounds[$scope.game.rounds.length - 1].yours = $scope.guess;
 			updateRoundsExtraData($scope.game);
 		}
 		$scope.guess = '';
@@ -174,7 +174,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 	function updateGameState(game) {
 		if (game.yourWord === undefined || game.yourWord === '')
 			state = GAME_CHOOSE_WORD_STATE;
-		else if (game.theirWord === undefined || game.theirWord === '' || (game.rounds.length > 0 && game.rounds[game.rounds.length - 1].theirs.length === 0))
+		else if (game.theirWord === undefined || game.theirWord === '' || (game.rounds === undefined || game.rounds.length > 0 && game.rounds[game.rounds.length - 1].theirs.length === 0))
 			state = GAME_WAITING_STATE;
 		else
 			state = GAME_PLAYING_STATE;
