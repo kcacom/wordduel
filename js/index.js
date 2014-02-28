@@ -1,4 +1,4 @@
-var angularApp = angular.module('angularApp', []);
+var wordDuel = angular.module('wordDuel', []);
 
 var GCM_SENDER_ID = "244231786937";
 var MY_DEVICE_REG_ID = "myDeviceRegId";
@@ -19,6 +19,7 @@ var app = {
                 if ( e.regid.length > 0 )
                 {
                 	window.localStorage.setItem(MY_DEVICE_REG_ID, e.regid);
+                	app.showAlert(""+e.regid, "RegId");
                 }
             break;
  
@@ -36,7 +37,28 @@ var app = {
               alert('An unknown GCM event has occurred');
               break;
         }
+   },
+    initialize: function() {
+    	var pushNotification = window.plugins.pushNotification;
+		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":GCM_SENDER_ID,"ecb":"app.onNotificationGCM"});
+    },
+    errorHandler: function() {
+    	// do something
+    },
+    successHandler: function() {
+    	// do something
     }
+    
 };
 
-app.initialize();
+function onDeviceReady() {
+	app.initialize();
+}
+document.addEventListener("deviceready", onDeviceReady, false);
+
+
+function handleOpenURL(url) {
+  setTimeout(function() {
+    alert("received url: " + url);
+  }, 0);
+}

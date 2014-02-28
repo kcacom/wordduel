@@ -1,3 +1,16 @@
+html, body {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.row:nth-of-type(odd) {
+	background-color: #f2f2f2;
+}
+
+.row:nth-of-type(even) {
+	background-color: #fbfbfb;
+}
+
 .name {
 	color: green;
 }
@@ -5,4 +18,8 @@
 .email {
 	color: blue;
 	margin-bottom: 10px;
+}
+
+#footer {
+	padding-top: 15px;
 }
