@@ -94,10 +94,15 @@ function deserializeAndStoreGameState(opponentEmail, gameState) {
 
 function updatePlayerList(opponentEmail, deviceRegId) {
 	var players = JSON.parse(localStorage["player-list"]);
+	var found = false;
 	for (var i=0; i<players.length; i+=1) {
 		if (players[i].email === opponentEmail) {
 			players[i].deviceRegId = deviceRegId;
+			found = true;
 		}
+	}
+	if (!found) {
+		players.push({'name':'Unknown','email':opponentEmail,'deviceRegId':deviceRegId});
 	}
 	localStorage["player-list"] = JSON.stringify(players);
 }
