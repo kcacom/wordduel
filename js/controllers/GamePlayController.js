@@ -165,6 +165,8 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 	function getMatches(guess, word) {
 		var matches = 0;
 
+		if (!word)
+			return 0;
 		for (var i=0; i<word.length; i+=1) {
 			if (guess.indexOf(word[i]) >= 0)
 				matches += 1;
@@ -176,7 +178,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 	function updateGameState(game) {
 		if (game.yourWord === undefined || game.yourWord === '')
 			state = GAME_CHOOSE_WORD_STATE;
-		else if (game.theirWord === undefined || game.theirWord === '' || (game.rounds === undefined || game.rounds.length > 0 && game.rounds[game.rounds.length - 1].theirs.length === 0))
+		else if (game.theirWord === undefined || game.theirWord === '' || (game.rounds === undefined || game.rounds.length > 0 && (!game.rounds[game.rounds.length - 1].theirs || game.rounds[game.rounds.length - 1].theirs.length === 0)))
 			state = GAME_WAITING_STATE;
 		else
 			state = GAME_PLAYING_STATE;
