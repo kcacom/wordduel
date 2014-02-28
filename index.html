@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="angularApp">
+<html>
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
@@ -8,15 +8,15 @@
         <script type="text/javascript" src="js/vendor/jquery-1.10.2.min.js"></script>
         <title>Word Duel</title>
     </head>
-    <body ng-controller="PlayerListController">
+    <body ng-app="wordDuel">
     	<h1>Word Duel</h1>
-    	<div>
-    		<h2>Games</h2>
-    		<div>List of opponents</div>
-    	</div>
-        <div>
-            <a href="contacts.html">Contacts</a>
+        <div ng-controller="PlayerListController">
+        	<div ng-repeat="player in playerList" class="row" ng-click="selectPlayer(player)">
+        		<div class="col-md-6 name">{{player.name}}</div>
+        		<div class="col-md-6 email">{{player.email}}</div>
+        	</div>
         </div>
+        <a href="contacts.html" class="btn btn-default btn-lg btn-block">Add From Contacts</a>
     	<div>
     		<a href="gamePlay.html">Goto Game Page</a>
     	</div>
@@ -24,6 +24,8 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/vendor/angular.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/services/GamePlayStorage.js"></script>
+        <script type="text/javascript" src="js/controllers/PlayerListController.js"></script>
         <script type="text/javascript">
             app.initialize();
         </script>
