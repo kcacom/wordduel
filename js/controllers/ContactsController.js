@@ -27,7 +27,10 @@ wordduel.controller("ContactsController", function($scope, $window) {
 	}
 
 	$('#contactsBus').bind('successfulContactsCallback', function(e, contacts) {
-		$scope.contacts = contacts;
+		notify(contacts[0].displayName);
+		$scope.$apply(function() {
+			$scope.contacts = contacts;
+		});
 	});
 });
 
@@ -38,6 +41,27 @@ function notify(message, title) {
 		alert(title ? (title + ": " + message) : message);
 	}
 };
+
+function processContacts(contacts) {
+	var normalizedContacts = [];
+	for (var i = 0; i < contacts.length; i++) {
+		var contact = contacts[i];
+		var emailAddress = '';
+		for (var ii = 0; contact.emails && ii < contact.emails.length; ii++) {
+			if (contact.emails[ii].pref) {
+				emailAddress = contact.emails[ii].value || '';
+				break;
+			}
+		};
+		normalizedContacts.push({
+			"displayName": contact.displayName || '',
+			"givenName": contact.name.givenName || '',
+			"familyName": contact.name.familyName || '',
+			"emailAddress": emailAddress
+		});
+	}
+	$('#contactsBus').trigger('successfulContactsCallback', [normalizedContacts]);
+}
 
 var app = {
 
@@ -53,37 +77,27 @@ var app = {
 			self.notify('find', 'info');
 			navigator.contacts.find(fields,
 				function (contacts) {
-					self.notify('success', 'info');
-					var normalizedContacts = [];
-					for (var i = 0; i < contacts.length; i++) {
-						var contact = contacts[i];
-						var emailAddress = '';
-						for (var ii = 0; contact.emails && ii < contact.emails.length; ii++) {
-							if (contact.emails[ii].pref) {
-								emailAddress = contact.emails[ii].value || '';
-								break;
-							}
-						};
-						normalizedContacts.push({
-							"displayName": contact.displayName || '',
-							"givenName": contact.name.givenName || '',
-							"familyName": contact.name.familyName || '',
-							"emailAddress": emailAddress
-						});
-					}
-					$('#contactsBus').trigger('successfulContactsCallback', normalizedContacts);
+					notify('success', 'info');
+					processContacts(contacts);
 				},
 				function (error) {
-					self.notify('Unable to show contacts. Error: ' + error, 'Error');
+					notify('Unable to show contacts. Error: ' + error, 'Error');
 				},
 				options);
 		} else {
-			self.notify('Unable to show contacts. Error: PhoneGap is unable to get the contacts.', 'Error');
+			notify('Unable to show contacts. Error: PhoneGap is unable to get the contacts.', 'Error');
+			//processContacts([{"displayName":"Patrick Morrow","name":{"givenName":"Patrick","familyName":"Morrow"},"emails":[{"value":"pat@themorrowgroup.com","pref":true}]}]);
 		}
 		
 	}
 	
 };
+
+/*
+setTimeout(function() {
+	app.initialize();
+}, 500);
+*/
 
 function onDeviceReady() {
 	app.initialize();
