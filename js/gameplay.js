@@ -1,3 +1,3 @@
 'use strict';
 
-var gamePlay = angular.module('gamePlay', []);
+var wordDuel = angular.module('wordDuel', []);

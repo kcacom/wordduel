@@ -9,22 +9,22 @@
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<title>Word Duel</title>
 	</head>
-	<body data-ng-app="wordduel">
-		<div id="upper" class="container-fluid">
-			<div class="row">
+	<body data-ng-app="wordDuel" data-ng-controller="GamePlayCtrl">
+		<section id="upper" class="container-fluid">
+			<header class="row">
 				<h1>Word Duel</h1>
-			</div>
-			<div class="row">
+			</header>
+			<section class="row">
 				<div class="col-xs-6">
-					<h2>You</h2>
+					<h2>{{name}}</h2>
 					<h2>? ? ? ?</h2>
 				</div>
 				<div class="col-xs-6">
 					<h2>Player 2</h2>
 					<h2>W O R D</h2>
 				</div>
-			</div>
-			<div id="rounds" class="row">
+			</section>
+			<section id="rounds" class="row">
 				<div class="col-xs-12">
 					<span id="matchesLeft">*</span>
 					<button type="button" class="btn btn-default">X</button>
@@ -38,10 +38,10 @@
 					<button type="button" class="btn btn-default">X</button>
 					<span id="matchesRight">*</span>
 				</div>
-			</div>
-		</div>
-		<div id="lower" class="container-fluid top-spacing">
-			<div class="row top-spacing">
+			</section>
+		</section>
+		<section id="lower" class="container-fluid top-spacing">
+			<section class="row top-spacing">
 				<div class="col-xs-2"></div>
 				<div class="col-xs-8">
 					<button type="button" class="btn btn-default">X</button>
@@ -51,8 +51,8 @@
 					<button id="guess" type="button" class="btn btn-primary">Guess</button>
 				</div>
 				<div class="col-xs-2"></div>
-			</div>
-			<div id="keyboard">
+			</section>
+			<section id="keyboard">
 				<div class="row top-spacing">
 					<div class="col-xs-12">
 						<button type="button" class="btn btn-default">A</button>
@@ -96,18 +96,17 @@
 						<button type="button" class="btn btn-default">Z</button>
 					</div>
 				</div>
-			</div>
-		</div>
+			</section>
+		</section>
 
 		<script type="text/javascript" src="cordova.js"></script>
 		<script src="js/vendor/jquery-2.1.0.js"></script>
 		<script src="js/vendor/bootstrap.js"></script>
 		<script src="js/vendor/angular.js"></script>
+		<script src="js/vendor/angular-route.js"></script>
 		<script src="js/gameplay.js"></script>
 		<script src="js/controllers/GamePlayController.js"></script>
+		<script src="js/services/GamePlayStorage.js"></script>
 		<script src="js/directives/GamePlayDirectives.js"></script>
-		<script>
-				app.initialize();
-		</script>
 	</body>
 </html>
