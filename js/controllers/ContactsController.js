@@ -62,17 +62,6 @@ wordduel.controller("ContactsController", function($scope, $window, $timeout){
 		}
 	};
 	
-	
-	document.addEventListener("deviceready", $scope.initialize, false);
+	$timeout($scope.initialize, 1000);
 });
-
-var app = { 
-	initialize: function() {
-		$('#contactsBus').trigger('successfulContactsCallback');
-	}
-};
-document.addEventListener("deviceready", onDeviceReady, false);
-function onDeviceReady() {
-	app.initialize();
-}
 
