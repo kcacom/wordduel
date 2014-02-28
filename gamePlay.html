@@ -30,15 +30,15 @@
 						<div class="row">
 							<div class="col-xs-12">
 								<span id="matchesLeft">{{r.yours.matches}}</span>
-								<button type="button" class="btn btn-default">{{r.yours.parts[0]}}</button>
-								<button type="button" class="btn btn-default">{{r.yours.parts[1]}}</button>
-								<button type="button" class="btn btn-default">{{r.yours.parts[2]}}</button>
-								<button type="button" class="btn btn-default">{{r.yours.parts[3]}}</button>
+								<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates[r.yours.parts[0]] === 'p', impossible: game.letterStates[r.yours.parts[0]] === 'i', definite: game.letterStates[r.yours.parts[0]] === 'd'}" data-ng-click="toggleLetterState(r.yours.parts[0])">{{r.yours.parts[0]}}</button>
+								<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates[r.yours.parts[1]] === 'p', impossible: game.letterStates[r.yours.parts[1]] === 'i', definite: game.letterStates[r.yours.parts[1]] === 'd'}" data-ng-click="toggleLetterState(r.yours.parts[1])">{{r.yours.parts[1]}}</button>
+								<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates[r.yours.parts[2]] === 'p', impossible: game.letterStates[r.yours.parts[2]] === 'i', definite: game.letterStates[r.yours.parts[2]] === 'd'}" data-ng-click="toggleLetterState(r.yours.parts[2])">{{r.yours.parts[2]}}</button>
+								<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates[r.yours.parts[3]] === 'p', impossible: game.letterStates[r.yours.parts[3]] === 'i', definite: game.letterStates[r.yours.parts[3]] === 'd'}" data-ng-click="toggleLetterState(r.yours.parts[3])">{{r.yours.parts[3]}}</button>
 								<span id="round">{{$index + 1}}</span>
-								<button type="button" class="btn btn-default">{{r.theirs.parts[0]}}</button>
-								<button type="button" class="btn btn-default">{{r.theirs.parts[1]}}</button>
-								<button type="button" class="btn btn-default">{{r.theirs.parts[2]}}</button>
-								<button type="button" class="btn btn-default">{{r.theirs.parts[3]}}</button>
+								<button type="button" class="btn btn-default" data-ng-click="toggleLetterState(r.theirs.parts[0])">{{r.theirs.parts[0]}}</button>
+								<button type="button" class="btn btn-default" data-ng-click="toggleLetterState(r.theirs.parts[1])">{{r.theirs.parts[1]}}</button>
+								<button type="button" class="btn btn-default" data-ng-click="toggleLetterState(r.theirs.parts[2])">{{r.theirs.parts[2]}}</button>
+								<button type="button" class="btn btn-default" data-ng-click="toggleLetterState(r.theirs.parts[3])">{{r.theirs.parts[3]}}</button>
 								<span id="matchesRight">{{r.theirs.matches}}</span>
 							</div>
 						</div>
@@ -60,45 +60,45 @@
 			<section id="keyboard">
 				<div class="row top-spacing">
 					<div class="col-xs-12">
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('A')">A</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('B')">B</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('C')">C</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('D')">D</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('E')">E</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('F')">F</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.A === 'p', impossible: game.letterStates.A === 'i', definite: game.letterStates.A === 'd'}" data-ng-click="keyPress('A')">A</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.B === 'p', impossible: game.letterStates.B === 'i', definite: game.letterStates.B === 'd'}" data-ng-click="keyPress('B')">B</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.C === 'p', impossible: game.letterStates.C === 'i', definite: game.letterStates.C === 'd'}" data-ng-click="keyPress('C')">C</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.D === 'p', impossible: game.letterStates.D === 'i', definite: game.letterStates.D === 'd'}" data-ng-click="keyPress('D')">D</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.E === 'p', impossible: game.letterStates.E === 'i', definite: game.letterStates.E === 'd'}" data-ng-click="keyPress('E')">E</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.F === 'p', impossible: game.letterStates.F === 'i', definite: game.letterStates.F === 'd'}" data-ng-click="keyPress('F')">F</button>
 						<button id="backspace" type="button" class="btn btn-default" data-ng-click="backspace()">&lt;==</button>
 					</div>
 				</div>
 				<div class="row top-spacing">
 					<div class="col-xs-12">
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('G')">G</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('H')">H</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('I')">I</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('J')">J</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('K')">K</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('L')">L</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('M')">M</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('N')">N</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.G === 'p', impossible: game.letterStates.G === 'i', definite: game.letterStates.G === 'd'}" data-ng-click="keyPress('G')">G</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.H === 'p', impossible: game.letterStates.H === 'i', definite: game.letterStates.H === 'd'}" data-ng-click="keyPress('H')">H</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.I === 'p', impossible: game.letterStates.I === 'i', definite: game.letterStates.I === 'd'}" data-ng-click="keyPress('I')">I</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.J === 'p', impossible: game.letterStates.J === 'i', definite: game.letterStates.J === 'd'}" data-ng-click="keyPress('J')">J</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.K === 'p', impossible: game.letterStates.K === 'i', definite: game.letterStates.K === 'd'}" data-ng-click="keyPress('K')">K</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.L === 'p', impossible: game.letterStates.L === 'i', definite: game.letterStates.L === 'd'}" data-ng-click="keyPress('L')">L</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.M === 'p', impossible: game.letterStates.M === 'i', definite: game.letterStates.M === 'd'}" data-ng-click="keyPress('M')">M</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.N === 'p', impossible: game.letterStates.N === 'i', definite: game.letterStates.N === 'd'}" data-ng-click="keyPress('N')">N</button>
 					</div>
 				</div>
 				<div class="row top-spacing">
 					<div class="col-xs-12">
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('O')">O</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('P')">P</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('Q')">Q</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('R')">R</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('S')">S</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('T')">T</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('U')">U</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('V')">V</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.O === 'p', impossible: game.letterStates.O === 'i', definite: game.letterStates.O === 'd'}" data-ng-click="keyPress('O')">O</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.P === 'p', impossible: game.letterStates.P === 'i', definite: game.letterStates.P === 'd'}" data-ng-click="keyPress('P')">P</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.Q === 'p', impossible: game.letterStates.Q === 'i', definite: game.letterStates.Q === 'd'}" data-ng-click="keyPress('Q')">Q</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.R === 'p', impossible: game.letterStates.R === 'i', definite: game.letterStates.R === 'd'}" data-ng-click="keyPress('R')">R</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.S === 'p', impossible: game.letterStates.S === 'i', definite: game.letterStates.S === 'd'}" data-ng-click="keyPress('S')">S</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.T === 'p', impossible: game.letterStates.T === 'i', definite: game.letterStates.T === 'd'}" data-ng-click="keyPress('T')">T</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.U === 'p', impossible: game.letterStates.U === 'i', definite: game.letterStates.U === 'd'}" data-ng-click="keyPress('U')">U</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.V === 'p', impossible: game.letterStates.V === 'i', definite: game.letterStates.V === 'd'}" data-ng-click="keyPress('V')">V</button>
 					</div>
 				</div>
 				<div class="row top-spacing">
 					<div class="col-xs-12">
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('W')">W</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('X')">X</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('Y')">Y</button>
-						<button type="button" class="btn btn-default" data-ng-click="keyPress('Z')">Z</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.W === 'p', impossible: game.letterStates.W === 'i', definite: game.letterStates.W === 'd'}" data-ng-click="keyPress('W')">W</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.X === 'p', impossible: game.letterStates.X === 'i', definite: game.letterStates.X === 'd'}" data-ng-click="keyPress('X')">X</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.Y === 'p', impossible: game.letterStates.Y === 'i', definite: game.letterStates.Y === 'd'}" data-ng-click="keyPress('Y')">Y</button>
+						<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates.Z === 'p', impossible: game.letterStates.Z === 'i', definite: game.letterStates.Z === 'd'}" data-ng-click="keyPress('Z')">Z</button>
 					</div>
 				</div>
 			</section>

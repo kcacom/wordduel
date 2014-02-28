@@ -26,3 +26,9 @@ ul {
 #backspace {
 	width: 73px;
 }
+.impossible {
+	background-color: #808080;
+}
+.definite {
+	background-color: #ffff00;
+}
