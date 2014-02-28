@@ -1,8 +1,8 @@
 var MY_DEVICE_REG_ID = "myDeviceRegId";
 
-var wordduel = angular.module('wordduel', []);
+var wordDuel = angular.module('wordDuel', []);
 
-wordduel.controller("ContactsController", function($scope, $window, $location) {
+wordDuel.controller("ContactsController", function ContactsController($scope, $window, $location, gamePlayStorage) {
 	$scope.contacts = [];
 
 	$scope.selectContact = function(displayName, givenName, familyName, emailAddress) {
@@ -10,26 +10,35 @@ wordduel.controller("ContactsController", function($scope, $window, $location) {
 	};
 
 	function emailContact(displayName, givenName, familyName, emailAddress) {
+		var deviceRegId = 0;
+		/*
 		var deviceRegId = $window.localStorage.getItem(MY_DEVICE_REG_ID);
 		if (!deviceRegId) {
 			notify('Unable to send an invitation. Not able to contact Google Cloud Messaging service!', 'Error');
 			return;
 		}
+		*/
 		var subject = 'Play Word Duel Invitation';
 		var body = 'Hello ' + name + ',<br/>';
 		body += 'Get the app here: <a href="https://play.google.com/store/apps/details?id=com.mobilewordduel">Word Duel</a><br/>';
 		body += 'Then accept the invitation to play: <a href="mobilewordduel://invite/?deviceRegId=' + deviceRegId + '&inviterName=Bob&inviterEmail=kelvcutler@gmail.com">Play!</a>';		
 		var recipients = [emailAddress,];
-		$window.plugins.emailComposer.showEmailComposerWithCallback(function() { emailContactCallback(displayName, givenName, familyName, emailAddress); }, subject, body, recipients, null, null, true);
+		$window.plugins.emailComposer.showEmailComposerWithCallback(function() {
+			emailContactCallback(displayName, givenName, familyName, emailAddress, deviceRegId);
+		}, subject, body, recipients, null, null, true);
 	}
-	function emailContactCallback(displayName, givenName, familyName, emailAddress) {
+	function emailContactCallback(displayName, givenName, familyName, emailAddress, deviceRegId) {
 		notify('Player invited!', 'Info');
+
+		var players = gamePlayStorage.getPlayerList();
+		players.push({"email":emailAddress,"name":displayName,"deviceRegId":deviceRegId});
+		notify(JSON.stringify(players));
+		//gamePlayStorage.setPlayerList(players)
+
 		$location = "index.html";
-		// TODO: start the game now, add to games being played
 	}
 
 	$('#contactsBus').bind('successfulContactsCallback', function(e, contacts) {
-		notify(contacts[0].displayName);
 		$scope.$apply(function() {
 			$scope.contacts = contacts;
 		});
@@ -77,10 +86,8 @@ var app = {
 			options.filter = '';
 			options.multiple = true;
 
-			notify('find', 'info');
 			navigator.contacts.find(fields,
 				function (contacts) {
-					notify('success', 'info');
 					processContacts(contacts);
 				},
 				function (error) {

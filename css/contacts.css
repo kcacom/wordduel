@@ -1,8 +1,6 @@
 html, body {
-	height: 100%;
 	padding-left: 10px;
 	padding-right: 10px;
-	/* padding-bottom: 40px; */
 }
 
 .row:nth-of-type(odd) {
@@ -23,9 +21,5 @@ html, body {
 }
 
 #footer {
-	/* height: 40px; */
-	width: 100%;
-	position: absolute;
-	left: 0;
-	bottom: 0;
+	padding-top: 15px;
 }
