@@ -1,6 +1,5 @@
 wordDuel.controller("PlayerListController", function($scope, $window, $timeout, gamePlayStorage){
 	$scope.playerList = gamePlayStorage.getPlayerList();
-	$scope.inviteReceived = false;
 	
 	if (!$scope.playerList) {
 		gamePlayStorage.setPlayerList([]);
@@ -25,7 +24,7 @@ wordDuel.controller("PlayerListController", function($scope, $window, $timeout, 
 				urlParams[decode(match[1])] = decode(match[2]);
 			$scope.playerList.push({'deviceRegId':urlParams.deviceRegId, 'name':urlParams.inviterName, 'email':urlParams.inviterEmail});
 			gamePlayStorage.setPlayerList($scope.playerList);
-			$scope.inviteReceived = true;
+			sendPushNotification($http, urlParams.deviceRegId, gamePlayStorage.getMyEmail(), null, gamePlayStorage.getDeviceRegId());
 		});
 	});
 });

@@ -61,7 +61,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 		updateGameState($scope.game);
 		
 		var opponentInfo = loadOpponentInfo(urlParams.opponent);
-		sendPushNotification(serializeGame($scope), opponentInfo);
+		sendPushNotification($http, opponentInfo.deviceRegId, gamePlayStorage.getMyEmail(), serializeGame($scope), null);
 	};
 
 	function loadOpponentInfo(opponent) {

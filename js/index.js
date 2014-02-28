@@ -25,6 +25,10 @@ var app = {
             case 'message':
             	if (e.gameState && e.opponentEmail) {
               		alert('opponent '+e.opponentEmail+' game update: '+e.gameState);
+            	} else if (e.opponentEmail && e.deviceRegId) {
+              		alert('opponent '+e.opponentEmail+' deviceRegId: '+e.deviceRegId);
+            	} else {
+            		alert("message: "+JSON.stringify(e));
             	}
             break;
  

@@ -167,12 +167,12 @@ var sendNoRetryMethod = Sender.prototype.sendNoRetry = function (message, regist
 
     post_options.timeout = timeout;
 
+	alert('Request to make: '+JSON.stringify(post_options));
 	this.requestMaker.post(post_options).success(function(data, status, headers, config) {
+		alert('Success: '+data);
 		if (!data)
 			return callback('response is null', null);
 
-		// Make sure that we don't crash in case something goes wrong while
-		// handling the response.
 		try {
 			var dataObj = JSON.parse(data);
 		} catch (e) {
@@ -180,6 +180,7 @@ var sendNoRetryMethod = Sender.prototype.sendNoRetry = function (message, regist
 		}
 		callback(null, dataObj);
 	}).error(function(data, status, headers, config) {
+		alert('Error: '+status+'; data: '+data);
 		return callback(status, null);
 	});
 };
@@ -257,28 +258,33 @@ function serializeGame(gameObject) {
 	return myHalf + "|" + theirHalf;
 }
 
-function sendPushNotification(gameState, opponentInfo) {
+function sendPushNotification(requestMaker, sendToDeviceRegId, myEmail, gameState, myDeviceRegId) {
+	if (!opponentInfo.deviceRegId)
+		return false;
 	var message = new Message({
 	    collapseKey: 'com.mobilewordduel',
 	    delayWhileIdle: true,
 	    timeToLive: 3,
 	    data: {
 	        'gameState': gameState,
-	        'opponentEmail': opponentInfo.email,
+	        'deviceRegId': myDeviceRegId,
+	        'opponentEmail': myEmail,
 	        'title': "Game update received",
 	        'message': "Tap to see game"
 	    }
 	});
 	
-	var sender = new Sender('AIzaSyApAdaVOhDgJn9_gkhm_TSptw0TM0FgaSA');
+	var sender = new Sender('AIzaSyApAdaVOhDgJn9_gkhm_TSptw0TM0FgaSA', null, requestMaker);
 	var registrationIds = [];
 	
-	registrationIds.push(opponentInfo.deviceRegId); 
+	registrationIds.push(sendToDeviceRegId); 
 	
 	/**
 	 * Params: message-literal, registrationIds-array, No. of retries, callback-function
 	 **/
+	alert("about to call send on sender!");
 	sender.send(message, registrationIds, 4, function (err, result) {
 	    alert("err: "+err+"; result: "+result);
 	});
+	return true;
 }
