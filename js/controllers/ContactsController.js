@@ -51,8 +51,6 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 			players.push({"email":contact.emailAddress,"name":contact.displayName,"deviceRegId":null});
 		gamePlayStorage.setPlayerList(players);
 
-		notify('Player invited!', 'Info');
-
 		$window.location.href = 'index.html';
 	}
 
