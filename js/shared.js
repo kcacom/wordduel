@@ -94,6 +94,7 @@ function deserializeAndStoreGameState(opponentEmail, gameState) {
 			yours = yours.slice(4);
 			theirs = theirs.slice(4);
 		}
+		alert('New Rounds: '+JSON.stringify(rounds)+"; old: "+(existingRounds ? JSON.stringify(existingRounds) : "none"));
 		return rounds;
 	}
 
