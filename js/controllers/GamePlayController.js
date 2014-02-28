@@ -5,21 +5,50 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 	var LETTER_IMPOSSIBLE_STATE = 'i';
 	var LETTER_DEFINITE_STATE = 'd';
 	var GAME_CHOOSE_WORD_STATE = 'choose-word';
+	var GAME_WAITING_STATE = 'waiting';
 	var GAME_PLAYING_STATE = 'playing';
 
 	$scope.name = gamePlayStorage.getMyName();
 	$scope.opponentName = loadOpponentInfo(urlParams.opponent);
 	$scope.game = loadGameState(urlParams.opponent);
+	$scope.guess = '';
 
-	var state = getGameState($scope.game);
-	$scope.buttonText = getButtonText(state);
+	var state = GAME_CHOOSE_WORD_STATE;
+	updateGameState($scope.game);
 
 	// listen for external game state changes
-	$('#gamePlayBus').bind('successfulStateCallback', function() {
-		$scope.$apply(function() {
+	$('#stateBus').bind('successfulStateCallback', function() {
+		$scope.$apply(function () {
 			$scope.game = loadGameState($scope.game.opponent);
+			updateGameState($scope.game);
 		});
 	});
+
+	$scope.keyPress = function(key) {
+		if (state === GAME_WAITING_STATE || $scope.guess.length >= 4)	return;
+		$scope.guess += key;
+	};
+
+	$scope.backspace = function () {
+		if ($scope.guess.length === 0) return;
+		$scope.guess = $scope.guess.slice(0, -1);
+	};
+
+	$scope.guessWord = function () {
+		if (state === GAME_WAITING_STATE || $scope.guess.length < 4) return;
+
+		if (state === GAME_CHOOSE_WORD_STATE) {
+			$scope.game.yourWord = $scope.guess;
+		} else if (state === GAME_PLAYING_STATE) {
+			if ($scope.game.rounds.length === 0 || $scope.game.rounds[$scope.game.rounds.length - 1].yours.length > 0)
+				$scope.game.rounds.push({yours: $scope.guess, theirs: ''});
+			else
+				$scope.game.rounds[$scope.game.records.length - 1].yours = $scope.guess;
+			updateRoundsExtraData($scope.game);
+		}
+		$scope.guess = '';
+		updateGameState($scope.game);
+	};
 
 	function loadOpponentInfo(opponent) {
 		var players = gamePlayStorage.getPlayerList();
@@ -42,7 +71,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 		} else if (game.letterStates === undefined) {
 			game.letterStates = createLetterStates();
 		}
-		game.roundsData = getRoundsExtraData(game);
+		updateRoundsExtraData(game);
 		return game;
 	}
 
@@ -87,7 +116,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 		};
 	}
 
-	function getRoundsExtraData(game){
+	function updateRoundsExtraData(game){
 		var roundsData = [];
 		for (var i=0; i<game.rounds.length; i+=1) {
 			roundsData[i] = {
@@ -101,7 +130,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 				}
 			}
 		}
-		return roundsData;
+		$scope.roundsData = roundsData;
 	}
 
 	function getMatches(guess, word) {
@@ -111,15 +140,22 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 		return matches.length;
 	}
 
-	function getGameState(game) {
-		if (game.yourWord === undefined || game.yourWord === '' || game.theirWord === undefined || game.theirWord === '')
-			return GAME_CHOOSE_WORD_STATE;
-		return GAME_PLAYING_STATE;
+	function updateGameState(game) {
+		if (game.yourWord === undefined || game.yourWord === '')
+			state = GAME_CHOOSE_WORD_STATE;
+		else if (game.theirWord === undefined || game.theirWord === '' || (game.rounds.length > 0 && game.rounds[game.rounds.length - 1].theirs.length === 0))
+			state = GAME_WAITING_STATE;
+		else
+			state = GAME_PLAYING_STATE;
+		$scope.buttonText = getButtonText(state);
+		gamePlayStorage.setGameState(game.opponent, game);
 	}
 
 	function getButtonText(state) {
 		if (state === GAME_CHOOSE_WORD_STATE)
 			return "Choose Secret Word";
+		if (state === GAME_WAITING_STATE)
+			return "Waiting For Turn...";
 		return "Guess";
 	}
 });

@@ -26,7 +26,7 @@
 			</section>
 			<section id="rounds">
 				<ul>
-					<li ng-repeat="r in game.roundsData">
+					<li data-ng-repeat="r in roundsData">
 						<div class="row">
 							<div class="col-xs-12">
 								<span id="matchesLeft">{{r.yours.matches}}</span>
@@ -50,55 +50,55 @@
 			<section class="row top-spacing">
 				<div class="col-xs-12">
 					<span>&nbsp;&nbsp;</span>
-					<button type="button" class="btn btn-default"></button>
-					<button type="button" class="btn btn-default"></button>
-					<button type="button" class="btn btn-default"></button>
-					<button type="button" class="btn btn-default"></button>
-					<button id="guess" type="button" class="btn btn-primary">{{buttonText}}</button>
+					<button type="button" class="btn btn-default">{{guess[0]}}</button>
+					<button type="button" class="btn btn-default">{{guess[1]}}</button>
+					<button type="button" class="btn btn-default">{{guess[2]}}</button>
+					<button type="button" class="btn btn-default">{{guess[3]}}</button>
+					<button id="guess" type="button" class="btn btn-primary" data-ng-click="guessWord()">{{buttonText}}</button>
 				</div>
 			</section>
 			<section id="keyboard">
 				<div class="row top-spacing">
 					<div class="col-xs-12">
-						<button type="button" class="btn btn-default">A</button>
-						<button type="button" class="btn btn-default">B</button>
-						<button type="button" class="btn btn-default">C</button>
-						<button type="button" class="btn btn-default">D</button>
-						<button type="button" class="btn btn-default">E</button>
-						<button type="button" class="btn btn-default">F</button>
-						<button id="backspace" type="button" class="btn btn-default">&lt;==</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('A')">A</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('B')">B</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('C')">C</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('D')">D</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('E')">E</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('F')">F</button>
+						<button id="backspace" type="button" class="btn btn-default" data-ng-click="backspace()">&lt;==</button>
 					</div>
 				</div>
 				<div class="row top-spacing">
 					<div class="col-xs-12">
-						<button type="button" class="btn btn-default">G</button>
-						<button type="button" class="btn btn-default">H</button>
-						<button type="button" class="btn btn-default">I</button>
-						<button type="button" class="btn btn-default">J</button>
-						<button type="button" class="btn btn-default">K</button>
-						<button type="button" class="btn btn-default">L</button>
-						<button type="button" class="btn btn-default">M</button>
-						<button type="button" class="btn btn-default">N</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('G')">G</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('H')">H</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('I')">I</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('J')">J</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('K')">K</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('L')">L</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('M')">M</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('N')">N</button>
 					</div>
 				</div>
 				<div class="row top-spacing">
 					<div class="col-xs-12">
-						<button type="button" class="btn btn-default">O</button>
-						<button type="button" class="btn btn-default">P</button>
-						<button type="button" class="btn btn-default">Q</button>
-						<button type="button" class="btn btn-default">R</button>
-						<button type="button" class="btn btn-default">S</button>
-						<button type="button" class="btn btn-default">T</button>
-						<button type="button" class="btn btn-default">U</button>
-						<button type="button" class="btn btn-default">V</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('O')">O</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('P')">P</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('Q')">Q</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('R')">R</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('S')">S</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('T')">T</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('U')">U</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('V')">V</button>
 					</div>
 				</div>
 				<div class="row top-spacing">
 					<div class="col-xs-12">
-						<button type="button" class="btn btn-default">W</button>
-						<button type="button" class="btn btn-default">X</button>
-						<button type="button" class="btn btn-default">Y</button>
-						<button type="button" class="btn btn-default">Z</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('W')">W</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('X')">X</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('Y')">Y</button>
+						<button type="button" class="btn btn-default" data-ng-click="keyPress('Z')">Z</button>
 					</div>
 				</div>
 			</section>
