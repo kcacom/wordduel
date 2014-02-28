@@ -88,9 +88,9 @@ function deserializeAndStoreGameState(opponentEmail, gameState) {
 		var rounds = [];
 		yours = yours.slice(4);
 		theirs = theirs.slice(4);
-		while (yours.length > 0 || theirs.length > 0) {
+		while (yours.length > 0 || theirs.length > 0 || (existingRounds && existingRounds.length > rounds.length)) {
 			var yourGuess = existingRounds ? existingRounds[rounds.length] : yours.slice(0, 4);
-			rounds.push({yours: yourGuess, theirs: theirs.slice(0, 4)})
+			rounds.push({yours: yourGuess, theirs: theirs.slice(0, 4)});
 			yours = yours.slice(4);
 			theirs = theirs.slice(4);
 		}
