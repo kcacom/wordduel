@@ -9,7 +9,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 	var GAME_PLAYING_STATE = 'playing';
 
 	$scope.name = gamePlayStorage.getMyName();
-	$scope.opponentName = loadOpponentInfo(urlParams.opponent);
+	$scope.opponentName = loadOpponentInfo(urlParams.opponent).name;
 	$scope.game = loadGameState(urlParams.opponent);
 	$scope.guess = '';
 
@@ -48,13 +48,16 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorag
 		}
 		$scope.guess = '';
 		updateGameState($scope.game);
+		
+		var opponentInfo = loadOpponentInfo(urlParams.opponent);
+		sendPushNotification(serializeGame($scope), opponentInfo);
 	};
 
 	function loadOpponentInfo(opponent) {
 		var players = gamePlayStorage.getPlayerList();
 		for (var i=0; i<players.length; i+=1) {
 			if (players[i].email === opponent) {
-				return players[i].name;
+				return players[i];
 			}
 		}
 		return 'Unknown';

@@ -24,7 +24,7 @@ var app = {
  
             case 'message':
             	if (e.gameState && e.opponentEmail) {
-            		
+              		alert('opponent '+e.opponentEmail+' game update: '+e.gameState);
             	}
             break;
  
