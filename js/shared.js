@@ -43,7 +43,6 @@ var app = {
 	            	try {
 		            	if (e.payload.gameState && e.payload.opponentEmail) {
 		              		deserializeAndStoreGameState(e.payload.opponentEmail, ""+e.payload.gameState);
-		              		alert("gameState: "+e.payload);
 		              		if (stateBusJqryObj) {
 		              			stateBusJqryObj.trigger('successfulStateCallback', []);
 		              		}
