@@ -58,9 +58,11 @@ function onDeviceReady() {
 document.addEventListener("deviceready", onDeviceReady, false);
 
 var urlCalled = null;
+var newInviteJqryObj = null;
 
 
 $(document).ready(function() {
+	newInviteJqryObj = $('#newInvite');
 	if (urlCalled) {
 		document.getElementById('newInvite').value = url;
 		document.getElementById('newInvite').change();
@@ -68,9 +70,9 @@ $(document).ready(function() {
 	}
 });
 function handleOpenURL(url) {
-	if(document.getElementById('newInvite')) {
-		$('#newInvite').val(url);
-		$('#newInvite').change();
+	if(newInviteJqryObj) {
+		newInviteJqryObj.val(url);
+		newInviteJqryObj.change();
 	} else {
 		urlCalled = url;
 	}

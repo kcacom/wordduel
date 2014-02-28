@@ -1,5 +1,6 @@
 wordDuel.controller("PlayerListController", function($scope, $window, $timeout, gamePlayStorage){
 	$scope.playerList = gamePlayStorage.getPlayerList();
+	$scope.inviteReceived = false;
 	
 	if (!$scope.playerList) {
 		gamePlayStorage.setPlayerList([{'name':'Kelv Cutler', 'email':'kelvcutler@gmail.com', 'deviceRegId':'0000000'},]);
@@ -13,7 +14,7 @@ wordDuel.controller("PlayerListController", function($scope, $window, $timeout, 
 	$('#newInvite').change(function() {
 		$scope.$apply(function() {
 			var match,
-				val = $('#newInvite').val(),
+				val = newInviteJqryObj.val(),
 				pl     = /\+/g,  // Regex for replacing addition symbol with a space
 				search = /([^&=]+)=?([^&]*)/g,
 				decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
@@ -22,7 +23,8 @@ wordDuel.controller("PlayerListController", function($scope, $window, $timeout, 
 			var urlParams = {};
 			while (match = search.exec(query))
 				urlParams[decode(match[1])] = decode(match[2]);
-			$scope.playerList[$scope.playerList.length] = {'deviceRegId':urlParams.deviceRegId, 'name':urlParams.inviterName, 'email':urlParams.inviterEmail};
+			$scope.playerList.push({'deviceRegId':urlParams.deviceRegId, 'name':urlParams.inviterName, 'email':urlParams.inviterEmail});
+			$scope.inviteReceived = true;
 		});
 	});
 });
