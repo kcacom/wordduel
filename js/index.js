@@ -19,7 +19,6 @@ var app = {
                 if ( e.regid.length > 0 )
                 {
                 	window.localStorage.setItem(MY_DEVICE_REG_ID, e.regid);
-                	app.showAlert(""+e.regid, "RegId");
                 }
             break;
  
@@ -39,8 +38,10 @@ var app = {
         }
    },
     initialize: function() {
-    	var pushNotification = window.plugins.pushNotification;
-		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":GCM_SENDER_ID,"ecb":"app.onNotificationGCM"});
+    	if (window.plugins && window.plugins.pushNotification) {
+	    	var pushNotification = window.plugins.pushNotification;
+			pushNotification.register(app.successHandler, app.errorHandler,{"senderID":GCM_SENDER_ID,"ecb":"app.onNotificationGCM"});
+		}
     },
     errorHandler: function() {
     	// do something
@@ -53,12 +54,26 @@ var app = {
 
 function onDeviceReady() {
 	app.initialize();
-}
+};
 document.addEventListener("deviceready", onDeviceReady, false);
 
+var urlCalled = null;
+var newInviteJqryObj = null;
 
+
+$(document).ready(function() {
+	newInviteJqryObj = $('#newInvite');
+	if (urlCalled) {
+		document.getElementById('newInvite').value = url;
+		document.getElementById('newInvite').change();
+		urlCalled = null;
+	}
+});
 function handleOpenURL(url) {
-  setTimeout(function() {
-    alert("received url: " + url);
-  }, 0);
-}
+	if(newInviteJqryObj) {
+		newInviteJqryObj.val(url);
+		newInviteJqryObj.change();
+	} else {
+		urlCalled = url;
+	}
+};

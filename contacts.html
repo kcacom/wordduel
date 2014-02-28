@@ -9,7 +9,8 @@
         <title>Word Duel</title>
     </head>
     <body ng-app="wordDuel">
-    	<h1>Word Duel</h1>
+    	<h1 id="title">Word Duel</h1>
+        <h4 id="subtitle">Who do you want to start a game with?</h4>
 
         <div id="contacts" ng-controller="ContactsController">
         	<div ng-repeat="contact in contacts | orderBy:'+displayName'" class="row" ng-click="selectContact(contact)">
