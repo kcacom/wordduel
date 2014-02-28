@@ -12,9 +12,9 @@
     	<h1>Word Duel</h1>
 
         <div id="contacts" ng-controller="ContactsController">
-        	<div ng-repeat="contact in contacts" class="row" ng-click="selectContact(contact)">
-        		<div class="col-md-6 name">{{contact.displayName}}</div>
-        		<div class="col-md-6 email">{{contact.emailAddress}}</div>
+        	<div ng-repeat="contact in contacts | orderBy:'+displayName'" class="row" ng-click="selectContact(contact)">
+        		<div class="col-md-6 name">{{contact.displayName | uppercase}}</div>
+        		<div class="col-md-6 email">{{contact.emailAddress | lowercase}}</div>
         	</div>
         </div>
 

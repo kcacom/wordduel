@@ -25,7 +25,7 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 		var torecipients = [contact.emailAddress];
 		$window.plugins.emailComposer.showEmailComposerWithCallback(function(r) {
 			notify('callback return: ' + r, 'Debug');
-			emailContactCallback(contactdisplayName, deviceRegId);
+			emailContactCallback(contact, deviceRegId);
 		}, subject, body, torecipients, null, null, true, null, null);
 	}
 	function emailContactCallback(contact, deviceRegId) {
@@ -34,7 +34,7 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 		var players = gamePlayStorage.getPlayerList();
 		players.push({"email":contact.emailAddress,"name":contact.displayName,"deviceRegId":deviceRegId});
 		notify(JSON.stringify(players));
-		//gamePlayStorage.setPlayerList(players)
+	//	gamePlayStorage.setPlayerList(players)
 
 		$location = "index.html";
 	}
