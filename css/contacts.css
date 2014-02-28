@@ -1,4 +1,9 @@
-html, body {
+#title {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#contacts {
 	padding-left: 10px;
 	padding-right: 10px;
 }
@@ -8,16 +13,18 @@ html, body {
 }
 
 .row:nth-of-type(even) {
-	background-color: #fbfbfb;
+	background-color: #fafafa;
 }
 
 .name {
-	color: green;
+	padding-top: 10px;
+	font-weight: bold;
+	color: #4d4d4d;
 }
 
 .email {
 	color: blue;
-	margin-bottom: 10px;
+	padding-bottom: 10px;
 }
 
 #footer {
