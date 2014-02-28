@@ -42,7 +42,8 @@ var app = {
             	if (e.payload) {
 	            	try {
 		            	if (e.payload.gameState && e.payload.opponentEmail) {
-		              		deserializeAndStoreGameState(e.payload.opponentEmail, e.payload.gameState);
+		              		deserializeAndStoreGameState(e.payload.opponentEmail, ""+e.payload.gameState);
+		              		alert("gameState: "+e.payload);
 		              		if (stateBusJqryObj) {
 		              			stateBusJqryObj.trigger('successfulStateCallback', []);
 		              		}
@@ -53,7 +54,7 @@ var app = {
 		              		}
 		            	}
 		            } catch(ex) {
-		            	alert(ex.message);
+		            	alert(ex.message+" payload: "+e.payload);
 		            }
 	            }
             break;
