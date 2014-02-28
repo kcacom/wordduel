@@ -53,7 +53,7 @@ var app = {
 		              		}
 		            	}
 		            } catch(ex) {
-		            	alert(ex);
+		            	alert(ex.message);
 		            }
 	            }
             break;
