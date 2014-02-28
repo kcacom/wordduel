@@ -74,8 +74,8 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 			}
 		}
 		return 'Unknown';
-	}
-
+	};
+	
 	function loadGameState(opponent) {
 		var current = $scope.game;
 		var game = gamePlayStorage.getGameState(opponent);
@@ -84,7 +84,8 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 
 		if (current !== undefined) {
 			game.letterStates = current.letterStates;
-		} else if (game.letterStates === undefined) {
+		}
+		if (game.letterStates === undefined) {
 			game.letterStates = createLetterStates();
 		}
 		updateRoundsExtraData(game);
@@ -94,7 +95,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 			$scope.reminderSent = true;
 		}
 		return game;
-	}
+	};
 
 	function createNewGame() {
 		return {
@@ -102,8 +103,8 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 			theirWord: '',
 			rounds: [],
 			letterStates: createLetterStates()
-		}
-	}
+		};
+	};
 
 	function createLetterStates() {
 		return {
@@ -134,24 +135,26 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 			Y: LETTER_POSSIBLE_STATE,
 			Z: LETTER_POSSIBLE_STATE
 		};
-	}
+	};
 
 	function updateRoundsExtraData(game){
 		var roundsData = [];
-		for (var i=0; i<game.rounds.length; i+=1) {
-			roundsData[i] = {
-				yours: {
-					parts: game.rounds[i].yours.split(''),
-					matches: getMatches(game.rounds[i].yours, game.theirWord)
-				},
-				theirs: {
-					parts: game.rounds[i].theirs.split(''),
-					matches: getMatches(game.rounds[i].theirs, game.yourWord)
-				}
+		if (game.rounds) {
+			for (var i=0; i<game.rounds.length; i+=1) {
+				roundsData[i] = {
+					yours: {
+						parts: game.rounds[i].yours.split(''),
+						matches: getMatches(game.rounds[i].yours, game.theirWord)
+					},
+					theirs: {
+						parts: game.rounds[i].theirs.split(''),
+						matches: getMatches(game.rounds[i].theirs, game.yourWord)
+					}
+				};
 			}
 		}
 		$scope.roundsData = roundsData;
-	}
+	};
 
 	function getMatches(guess, word) {
 		var matches = 0;
@@ -162,7 +165,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		}
 
 		return matches;
-	}
+	};
 
 	function updateGameState(game) {
 		if (game.yourWord === undefined || game.yourWord === '')
@@ -173,7 +176,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 			state = GAME_PLAYING_STATE;
 		$scope.buttonText = getButtonText(state);
 		gamePlayStorage.setGameState(urlParams.opponent, game);
-	}
+	};
 
 	function getButtonText(state) {
 		if (state === GAME_CHOOSE_WORD_STATE)
@@ -181,5 +184,5 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		if (state === GAME_WAITING_STATE)
 			return "Waiting For Turn...";
 		return "Guess";
-	}
+	};
 });

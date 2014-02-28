@@ -52,7 +52,13 @@ wordDuel.factory('gamePlayStorage', function () {
 			setJson(PLAYER_LIST, list);
 		},
 		getGameState: function (playerEmail) {
-			return getJson(playerEmail, '{}');
+			var game = getJson(playerEmail, '{}');
+			if (game.rounds) {
+				for (var i=0; i<game.rounds.length; i++)
+					if (game.rounds[i]["$$hashKey"])
+						delete game.rounds[i]["$$hashKey"];
+			}
+			return ;
 		},
 		setGameState: function (playerEmail, state) {
 			setJson(playerEmail, state);
