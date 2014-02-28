@@ -35,6 +35,8 @@ wordDuel.controller("ContactsController", function ContactsController($scope, $w
 		var torecipients = [contact.emailAddress];
 		$window.plugins.emailComposer.showEmailComposerWithCallback(null, subject, body, torecipients, null, null, true, null, null);
 
+		// TODO: should use the callback, but the callback isn't being called
+
 		var players = gamePlayStorage.getPlayerList();
 		players.push({"email":contact.emailAddress,"name":contact.displayName,"deviceRegId":deviceRegId});
 		gamePlayStorage.setPlayerList(players)
@@ -100,12 +102,15 @@ var app = {
 			options.filter = '';
 			options.multiple = true;
 
+			spinnerplugin.show();
 			navigator.contacts.find(fields,
 				function (contacts) {
 					processContacts(contacts);
+					spinnerplugin.hide();
 				},
 				function (error) {
 					notify('Unable to show contacts. Error: ' + error, 'Error');
+					spinnerplugin.hide();
 				},
 				options);
 		} else {
