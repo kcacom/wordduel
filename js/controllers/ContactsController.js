@@ -2,7 +2,7 @@ var MY_DEVICE_REG_ID = "myDeviceRegId";
 
 var wordduel = angular.module('wordduel', []);
 
-wordduel.controller("ContactsController", function($scope, $window) {
+wordduel.controller("ContactsController", function($scope, $window, $location) {
 	$scope.contacts = [];
 
 	$scope.selectContact = function(displayName, givenName, familyName, emailAddress) {
@@ -20,10 +20,12 @@ wordduel.controller("ContactsController", function($scope, $window) {
 		body += 'Get the app here: <a href="https://play.google.com/store/apps/details?id=com.mobilewordduel">Word Duel</a><br/>';
 		body += 'Then accept the invitation to play: <a href="mobilewordduel://invite/?deviceRegId=' + deviceRegId + '&inviterName=Bob&inviterEmail=kelvcutler@gmail.com">Play!</a>';		
 		var recipients = [emailAddress,];
-		$window.plugins.emailComposer.showEmailComposerWithCallback(emailContactCallback, subject, body, recipients, null, null, true);
+		$window.plugins.emailComposer.showEmailComposerWithCallback(function() { emailContactCallback(displayName, givenName, familyName, emailAddress); }, subject, body, recipients, null, null, true);
 	}
-	function emailContactCallback() {
+	function emailContactCallback(displayName, givenName, familyName, emailAddress) {
 		notify('Player invited!', 'Info');
+		$location = "index.html";
+		// TODO: start the game now, add to games being played
 	}
 
 	$('#contactsBus').bind('successfulContactsCallback', function(e, contacts) {
@@ -48,6 +50,9 @@ function processContacts(contacts) {
 		var contact = contacts[i];
 		var emailAddress = '';
 		for (var ii = 0; contact.emails && ii < contact.emails.length; ii++) {
+			if (ii == 0) {
+				emailAddress = contact.emails[ii].value || '';
+			}
 			if (contact.emails[ii].pref) {
 				emailAddress = contact.emails[ii].value || '';
 				break;
@@ -66,15 +71,13 @@ function processContacts(contacts) {
 var app = {
 
 	initialize: function() {
-		var self = this;
-
 		if (navigator.contacts) {
 			var fields = ['displayName', 'name', 'emails'];
 			var options = new ContactFindOptions();
 			options.filter = '';
 			options.multiple = true;
 
-			self.notify('find', 'info');
+			notify('find', 'info');
 			navigator.contacts.find(fields,
 				function (contacts) {
 					notify('success', 'info');
@@ -86,18 +89,11 @@ var app = {
 				options);
 		} else {
 			notify('Unable to show contacts. Error: PhoneGap is unable to get the contacts.', 'Error');
-			//processContacts([{"displayName":"Patrick Morrow","name":{"givenName":"Patrick","familyName":"Morrow"},"emails":[{"value":"pat@themorrowgroup.com","pref":true}]}]);
 		}
 		
 	}
 	
 };
-
-/*
-setTimeout(function() {
-	app.initialize();
-}, 500);
-*/
 
 function onDeviceReady() {
 	app.initialize();

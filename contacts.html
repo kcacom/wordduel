@@ -11,14 +11,16 @@
     <body ng-app="wordduel">
     	<h1>Word Duel</h1>
 
-        <div ng-controller="ContactsController">
+        <div id="contacts" ng-controller="ContactsController">
         	<div ng-repeat="contact in contacts" class="row" ng-click="selectContact('{{contact.displayName}}', '{{contact.givenName}}', '{{contact.familyName}}', '{{contact.email}}')">
         		<div class="col-md-6 name">{{contact.displayName}}</div>
         		<div class="col-md-6 email">{{contact.emailAddress}}</div>
         	</div>
         </div>
 
-        <a href="index.html" class="btn btn-default btn-lg btn-block">Cancel</a>
+        <div id="footer">
+            <a href="index.html" class="btn btn-default btn-lg btn-block">Cancel</a>
+        </div>
 
         <input type="hidden" id="contactsBus" />
 
