@@ -58,7 +58,7 @@ wordDuel.factory('gamePlayStorage', function () {
 					if (game.rounds[i]["$$hashKey"])
 						delete game.rounds[i]["$$hashKey"];
 			}
-			return ;
+			return game;
 		},
 		setGameState: function (playerEmail, state) {
 			setJson(playerEmail, state);

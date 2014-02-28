@@ -19,7 +19,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePla
 		var state = GAME_CHOOSE_WORD_STATE;
 		updateGameState($scope.game);
 	} catch (ex) {
-		alert(ex);
+		alert(ex.message);
 	}
 
 	// listen for external game state changes
