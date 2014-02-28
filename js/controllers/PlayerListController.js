@@ -1,4 +1,4 @@
-playerList.controller("PlayerListController", ['$scope','$window','$timeout','gamePlayStorage', function($scope, $window, $timeout){
+wordDuel.controller("PlayerListController", function($scope, $window, $timeout, gamePlayStorage){
 	$scope.playerList = gamePlayStorage.getPlayerList();
 	
 	if (!$scope.playerList) {
@@ -9,4 +9,8 @@ playerList.controller("PlayerListController", ['$scope','$window','$timeout','ga
 	$scope.selectPlayer = function(player) {
 		$window.location = "gamePlay.html?opponent="+player.email;
 	};
-}]);
+	
+	$('#inviteBus').bind('newInvite', function(e, deviceRegId, inviterName, inviterEmail) {
+		$scope.playerList[$scope.playerList.length] = {'deviceRegId':deviceRegId, 'name':inviterName, 'email':inviterEmail};
+	});
+});

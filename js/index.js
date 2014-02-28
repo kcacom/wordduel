@@ -39,8 +39,10 @@ var app = {
         }
    },
     initialize: function() {
-    	var pushNotification = window.plugins.pushNotification;
-		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":GCM_SENDER_ID,"ecb":"app.onNotificationGCM"});
+    	if (window.plugins && window.plugins.pushNotification) {
+	    	var pushNotification = window.plugins.pushNotification;
+			pushNotification.register(app.successHandler, app.errorHandler,{"senderID":GCM_SENDER_ID,"ecb":"app.onNotificationGCM"});
+		}
     },
     errorHandler: function() {
     	// do something
@@ -53,12 +55,21 @@ var app = {
 
 function onDeviceReady() {
 	app.initialize();
-}
+};
 document.addEventListener("deviceready", onDeviceReady, false);
 
 
 function handleOpenURL(url) {
-  setTimeout(function() {
-    alert("received url: " + url);
-  }, 0);
-}
+	setTimeout(function() {
+		var match,
+			pl     = /\+/g,  // Regex for replacing addition symbol with a space
+			search = /([^&=]+)=?([^&]*)/g,
+			decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+			query  = url.substr(url.indexOf("?")+1);
+	
+		var urlParams = {};
+		while (match = search.exec(query))
+			urlParams[decode(match[1])] = decode(match[2]);
+		$('#inviteBus').trigger('newInvite', [urlParams["deviceRegId"], urlParams["inviterName"], urlParams["inviterEmail"]]);
+	}, 0);
+};
