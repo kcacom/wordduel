@@ -148,11 +148,10 @@ var sendNoRetryMethod = Sender.prototype.sendNoRetry = function (message, regist
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Content-length': Buffer.byteLength(requestBody, 'utf8'),
+            'Content-length': getUTF8Length(requestBody),
             'Authorization': 'key=' + this.key
         },
-        uri: Constants.GCM_SEND_URI,
-        body: requestBody
+        url: Constants.GCM_SEND_URI
     };
 
     if(this.options && this.options.proxy){
@@ -167,17 +166,10 @@ var sendNoRetryMethod = Sender.prototype.sendNoRetry = function (message, regist
 
     post_options.timeout = timeout;
 
-	alert('Request to make: '+JSON.stringify(post_options));
-	this.requestMaker.post(post_options).success(function(data, status, headers, config) {
-		alert('Success: '+data);
+	this.requestMaker.post(Constants.GCM_SEND_URI, requestBody, post_options).success(function(data, status, headers, config) {
 		if (!data)
 			return callback('response is null', null);
 
-		try {
-			var dataObj = JSON.parse(data);
-		} catch (e) {
-			return callback("json error", null);
-		}
 		callback(null, dataObj);
 	}).error(function(data, status, headers, config) {
 		alert('Error: '+status+'; data: '+data);
@@ -248,6 +240,26 @@ Sender.prototype.send = function (message, registrationId, retries, callback) {
     }
 };
 
+
+// HELPER METHODS
+
+function getUTF8Length(string) {
+    var utf8length = 0;
+    for (var n = 0; n < string.length; n++) {
+        var c = string.charCodeAt(n);
+        if (c < 128) {
+            utf8length++;
+        }
+        else if((c > 127) && (c < 2048)) {
+            utf8length = utf8length+2;
+        }
+        else {
+            utf8length = utf8length+3;
+        }
+    }
+    return utf8length;
+ }
+
 function serializeGame(gameObject) {
 	var myHalf = "";
 	var theirHalf = "";
@@ -259,10 +271,10 @@ function serializeGame(gameObject) {
 }
 
 function sendPushNotification(requestMaker, sendToDeviceRegId, myEmail, gameState, myDeviceRegId) {
-	if (!opponentInfo.deviceRegId)
+	if (!sendToDeviceRegId)
 		return false;
 	var message = new Message({
-	    collapseKey: 'com.mobilewordduel',
+	    collapseKey: 'com.playwordduel',
 	    delayWhileIdle: true,
 	    timeToLive: 3,
 	    data: {
@@ -282,7 +294,6 @@ function sendPushNotification(requestMaker, sendToDeviceRegId, myEmail, gameStat
 	/**
 	 * Params: message-literal, registrationIds-array, No. of retries, callback-function
 	 **/
-	alert("about to call send on sender!");
 	sender.send(message, registrationIds, 4, function (err, result) {
 	    alert("err: "+err+"; result: "+result);
 	});

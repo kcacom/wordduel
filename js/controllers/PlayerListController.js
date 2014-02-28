@@ -1,4 +1,4 @@
-wordDuel.controller("PlayerListController", function($scope, $window, $timeout, gamePlayStorage){
+wordDuel.controller("PlayerListController", function($scope, $window, $http, $timeout, gamePlayStorage){
 	$scope.playerList = gamePlayStorage.getPlayerList();
 	
 	if (!$scope.playerList) {

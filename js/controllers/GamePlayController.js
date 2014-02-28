@@ -1,6 +1,6 @@
 'use strict';
 
-wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, gamePlayStorage) {
+wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, gamePlayStorage) {
 	var LETTER_POSSIBLE_STATE = 'p';
 	var LETTER_IMPOSSIBLE_STATE = 'i';
 	var LETTER_DEFINITE_STATE = 'd';

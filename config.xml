@@ -33,5 +33,5 @@
     <preference name="android-installLocation" value="auto" />
     <preference name="KeyboardShrinksView" value="true" />
     <icon src="icon.png" />
-    <access origin="http://127.0.0.1*" />
+    <access origin="http://*" />
 </widget>
