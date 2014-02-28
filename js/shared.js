@@ -94,6 +94,7 @@ function deserializeAndStoreGameState(opponentEmail, gameState) {
 			yours = yours.slice(4);
 			theirs = theirs.slice(4);
 		}
+		return rounds;
 	}
 
 	window.localStorage.setItem(opponentEmail, JSON.stringify(game));
