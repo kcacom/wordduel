@@ -43,7 +43,7 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, $window
 	// TODO: get rid of this hack, turn button into a clear or i give up
 	$scope.resetGame = function () {
 		var email = loadOpponentInfo(urlParams.opponent).email;
-		delete $window.locationStorage[email];
+		delete $window.localStorage[email];
 
 		$window.location = 'index.html';
 	};
