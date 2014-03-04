@@ -159,8 +159,6 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, $window
 		var roundsData = [];
 		if (game.rounds) {
 			for (var i=0; i<game.rounds.length; i+=1) {
-				if (typeof game.rounds[i].yours !== "string")
-					game.rounds[i].yours = "";
 				roundsData[i] = {
 					yours: {
 						parts: game.rounds[i].yours.split(''),
@@ -181,9 +179,13 @@ wordDuel.controller('GamePlayCtrl', function GamePlayCtrl($scope, $http, $window
 
 		if (!word)
 			return 0;
-		for (var i=0; i<word.length; i+=1) {
-			if (guess.indexOf(word[i]) >= 0)
+		var g = guess.split('');
+		var w = word.split('');
+		for (var i=0; i<g.length; i+=1) {
+			if (w.indexOf(g[i]) >= 0) {
+				delete w[w.indexOf(g[i])];
 				matches += 1;
+			}
 		}
 
 		return matches;
