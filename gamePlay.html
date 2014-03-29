@@ -30,7 +30,7 @@
 						<div class="row">
 							<div class="col-xs-12">
 								<span id="matchesLeft">{{r.yours.matches}}</span>
-								<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates[r.yours.parts[0]] === 'p', impossible: game.letterStates[r.yours.parts[0]] === 'i', definite: game.letterStates[r.yours.parts[0]] === 'd'}" data-ng-click="toggleLetterState(r.yours.parts[0])">{{r.yours.parts[0]}}</button>
+								<i-letter letter="r.yours.parts[0]" state="game.letterStates[r.yours.parts[0]]"></i-letter>
 								<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates[r.yours.parts[1]] === 'p', impossible: game.letterStates[r.yours.parts[1]] === 'i', definite: game.letterStates[r.yours.parts[1]] === 'd'}" data-ng-click="toggleLetterState(r.yours.parts[1])">{{r.yours.parts[1]}}</button>
 								<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates[r.yours.parts[2]] === 'p', impossible: game.letterStates[r.yours.parts[2]] === 'i', definite: game.letterStates[r.yours.parts[2]] === 'd'}" data-ng-click="toggleLetterState(r.yours.parts[2])">{{r.yours.parts[2]}}</button>
 								<button type="button" class="btn btn-default" ng-class="{possible: game.letterStates[r.yours.parts[3]] === 'p', impossible: game.letterStates[r.yours.parts[3]] === 'i', definite: game.letterStates[r.yours.parts[3]] === 'd'}" data-ng-click="toggleLetterState(r.yours.parts[3])">{{r.yours.parts[3]}}</button>
